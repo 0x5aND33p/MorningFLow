@@ -5,200 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>University of Wolverhampton Map</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #f4f4f4;
-            overflow: hidden;
-        }
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background-color: #f4f4f4;
+			text-align: center;
+		}
 
-        /* Container style */
-        .container {
-            width: 100%;
-            max-width: 500px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-top: 20px;
-            text-align: center;
-            position: relative;
-        }
+		.container {
+			max-width: 800px;
+			margin: 20px auto;
+			background: white;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
 
         .logo {
-            width: 150px;
+            width: 300px;
             height: auto;
-            margin-bottom: 20px;
         }
 
         .welcome-message {
             font-size: 24px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin: 20px;
         }
 
-        /* Map container style */
-        #map-container {
-            position: relative;
-            width: 100%;
-            height: 60vh;
+        .map-container {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: black;
-            overflow: hidden;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 20px;
         }
 
         #mapImage {
-            width: auto;
-            height: 100%;
-            cursor: grab;
-            transition: transform 0.3s ease;
+            width: 700px;
+            height: auto;
         }
 
-        /* Zoom buttons style */
-        .zoom-buttons {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
+        .buttons-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            z-index: 10;
+            align-items: flex-start;
+            margin-top: 10px;
         }
 
-        .zoom-button {
+        .buttons-title {
+            font-size: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
             background-color: #007BFF;
             color: white;
-            padding: 12px 15px;
-            border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
-            width: 50px;
-            text-align: center;
+            border-radius: 5px;
         }
 
-        .zoom-button:hover {
+        .button:hover {
             background-color: #0056b3;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .container {
-                max-width: 100%;
-                padding: 15px;
-            }
-
-            #map-container {
-                height: 50vh;
-            }
-
-            .zoom-button {
-                width: 45px;
-                padding: 10px 12px;
-                font-size: 14px;
-            }
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <img src="WOLVERHAMPTON-LOGO.jpeg" alt="University Logo" class="logo">
-        <div class="welcome-message">
-            University of Wolverhampton Map
-        </div>
-
-        <div id="map-container">
-            <img id="mapImage" src="uniMap.png" alt="University Map">
-        </div>
-
-        <div class="zoom-buttons">
-            <button class="zoom-button" id="zoomIn">+</button>
-            <button class="zoom-button" id="zoomOut">-</button>
-            <button class="zoom-button" id="resetZoom">Reset</button>
+<div class="container">
+    <img src="WOLVERHAMPTON-LOGO.jpeg" alt="University Logo" class="logo">
+    <div class="welcome-message">University of Wolverhampton Map</div>
+    
+    <div class="map-container">
+        <img id="mapImage" src="uniMap.png" alt="University Map">
+        <div class="buttons-container">
+            <div class="buttons-title">Buildings Info:</div>
+            <div class="buttons">
+                <button class="button">MC</button>
+                <button class="button">MB</button>
+                <button class="button">MI</button>
+				<button class="button">MG</button>
+                <button class="button">MA</button>
+                <button class="button">MD</button>
+            </div>
         </div>
     </div>
-
-    <script>
-        const mapImage = document.getElementById('mapImage');
-        let scale = 1;
-        const zoomStep = 0.2;
-        let isDragging = false;
-        let startX = 0, startY = 0;
-        let currentX = 0, currentY = 0;
-
-        document.getElementById('zoomIn').addEventListener('click', () => {
-            scale += zoomStep;
-            updateTransform();
-        });
-
-        document.getElementById('zoomOut').addEventListener('click', () => {
-            if (scale > zoomStep) {
-                scale -= zoomStep;
-            }
-            updateTransform();
-        });
-
-        document.getElementById('resetZoom').addEventListener('click', () => {
-            scale = 1;
-            currentX = currentY = 0;
-            updateTransform();
-        });
-
-        mapImage.addEventListener('mousedown', startDrag);
-        mapImage.addEventListener('mousemove', drag);
-        mapImage.addEventListener('mouseup', endDrag);
-        mapImage.addEventListener('mouseleave', endDrag);
-
-        mapImage.addEventListener('touchstart', startDrag, { passive: false });
-        mapImage.addEventListener('touchmove', drag, { passive: false });
-        mapImage.addEventListener('touchend', endDrag);
-
-        function startDrag(event) {
-            isDragging = true;
-            mapImage.style.cursor = 'grabbing';
-
-            const point = getPoint(event);
-            startX = point.x - currentX;
-            startY = point.y - currentY;
-        }
-
-        function drag(event) {
-            if (!isDragging) return;
-            event.preventDefault();
-
-            const point = getPoint(event);
-            currentX = point.x - startX;
-            currentY = point.y - startY;
-
-            updateTransform();
-        }
-
-        function endDrag() {
-            isDragging = false;
-            mapImage.style.cursor = 'grab';
-        }
-
-        function getPoint(event) {
-            if (event.touches) {
-                return { x: event.touches[0].clientX, y: event.touches[0].clientY };
-            } else {
-                return { x: event.clientX, y: event.clientY };
-            }
-        }
-
-        function updateTransform() {
-            mapImage.style.transform = `scale(${scale}) translate(${currentX}px, ${currentY}px)`;
-        }
-    </script>
-
+</div>
 </body>
 </html>
