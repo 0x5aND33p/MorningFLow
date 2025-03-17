@@ -9,29 +9,76 @@
   </head>
   <body>
     <?php
-        include ("navbar.html");
+      session_start();
+      $user_id = $_SESSION['user_id'] ?? null;
+      include ("navbar.html");
     ?>
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-        <img src="download.jpeg" class="d-block w-100" alt="...">
-        </div>  
-        <div class="carousel-item">
-        <img src="download(1).jpeg" class="d-block w-100" alt="...">
+      <div class="carousel-inner">
+          <div class="carousel-item active">
+          <img src="download.jpeg" class="d-block w-100" alt="...">
+          </div>  
+          <div class="carousel-item">
+          <img src="download(1).jpeg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+          <img src="download(2).jpeg" class="d-block w-100" alt="...">
+          </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <!-- DropDown -->
+    <div class="container mt-3">
+      <div class="row">
+          <div class="col-md-12">
+              <select class="form-select" id="courseDropdown">
+                  <option selected disabled>Schedule</option>
+                  <option value="computer-science">My Schedule</option>
+                  <option value="computer-science">BSc Computer Science</option>
+                  <option value="mechanical-engineering">BEng Mechanical Engineering</option>
+                  <option value="biomedical-science">BSc Biomedical Science</option>
+                  <option value="business-management">BSc Business Management</option>
+                  <option value="english-literature">BA English Literature</option>
+              </select>
+          </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- Schedule -->
+    <div class="container">
+    <div class="row p-3">
+        <div class="col-md-4">
+            <div class="card text-bg-info mb-3">
+                <div class="card-header">Monday</div>
+                <div class="card-body">
+                    <h5 class="card-title">9:00 AM - Math</h5>
+                    <p class="card-text">Lecture at Room 101</p>
+                </div>
+            </div>
         </div>
-        <div class="carousel-item">
-        <img src="download(2).jpeg" class="d-block w-100" alt="...">
+        <div class="col-md-4">
+            <div class="card text-bg-success mb-3">
+                <div class="card-header">Tuesday</div>
+                <div class="card-body">
+                    <h5 class="card-title">10:00 AM - Physics</h5>
+                    <p class="card-text">Lab session</p>
+                </div>
+            </div>
         </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-  </button>
 </div>
+
 
 
 

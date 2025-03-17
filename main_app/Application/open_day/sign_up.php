@@ -28,14 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Check if the username or email already exists
-        $sql_check = "SELECT * FROM users WHERE username='$username' OR email='$email'";
+        $sql_check = "SELECT * FROM openDay_users WHERE username='$username' OR email='$email'";
         $result = $conn->query($sql_check);
 
         if ($result->num_rows > 0) {
             echo "Username or Email already exists.";
         } else {
             // Prepare the SQL query to insert the new user
-            $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
+            $sql = "INSERT INTO openDay_users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
 
             if ($conn->query($sql) === TRUE) {
                 // Output the success message and trigger a redirect after 3 seconds

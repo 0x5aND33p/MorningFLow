@@ -1,47 +1,56 @@
 <?php
-// Database credentials
-$servername = "localhost";
-$username = "2362827";   // Your MySQL username
-$password = "Zaman2023@";       // Your MySQL password
-$dbname = "db2362827";  // The database you created
+session_start();
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+//Database connection
+include("db_connection.php");
+$conn = db_connections($password);
 
-// Check connection
-if ($conn->connect_error) {
+if ($conn->connect_error){
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Login form handling
-if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-    $username = $conn->real_escape_string($_POST['username']);
-    $password = $conn->real_escape_string($_POST['password']);
+if ($_SERVER['REQUEST_METHOD'] == "POST")
+{
+    $user = $_POST['username'];
+    $pass = $_POST['password'];
+
+    //Query to get user info
+    $stmt = $conn->prepare("SELECT user_id, password FROM openDay_users
+                            WHERE username = ?");
+    $stmt->bind_param("s", $user);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     // Input validation
-    if (empty($username) || empty($password)) {
+    if (empty($user) || empty($pass)) {
         echo "Username and password are required.";
     } else {
-        // Check if the user exists in the database
-        $sql = "SELECT * FROM users WHERE username='$username'";
-        $result = $conn->query($sql);
 
-        if ($result && $result->num_rows > 0) {
-            $user = $result->fetch_assoc();
+        //check to see if user exists
+        if($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            $hashed_password = $row['password'];
 
-            // Verify password
-            if (password_verify($password, $user['password'])) {
-               header('Location: index.php');
-               exit;
-            } else {
-                echo "Invalid password.";
+            //verify password
+            if(password_verify($pass,$hashed_password)){
+                session_start();
+                $_SESSION['user_id'] = $row['user_id'];
+                $_SESSION['username'] = $user;
+
+                //Regenerate Session ID for security
+                session_regenerate_id(true);
+
+                header("Location:index.php");
+                exit();
+            } else{
+                echo "Invalid Password!";
             }
-        } else {
-            echo "No user found with that username.";
+        }else {
+            echo "User not found.";
         }
-    }
-}
 
+    }
+}   
 ?>
 <!DOCTYPE html>
 <html>

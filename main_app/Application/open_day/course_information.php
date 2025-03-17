@@ -4,20 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Information - University of Wolverhampton</title>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
-
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
-        /* General Styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-            text-align: center;
-            color: #333;
-        }
-
-        /* Header */
+        /* Custom Styles */
         .header {
             background: linear-gradient(90deg, #007BFF, #0056b3);
             color: white;
@@ -25,53 +17,13 @@
             font-size: 24px;
             font-weight: bold;
             text-transform: uppercase;
+            text-align: center;
         }
 
-        /* Main Container */
-        .container {
-            max-width: 1100px;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Search & Filter Section */
-        .search-filter-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .search-bar, .filter-dropdown {
-            flex: 1;
-            padding: 10px;
-            font-size: 16px;
-            border: 2px solid #007BFF;
-            border-radius: 8px;
-            outline: none;
-            max-width: 48%;
-        }
-
-        /* Course List */
-        .course-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            justify-content: center;
-        }
-
-        /* Course Card */
         .course-card {
-            border-radius: 10px;
-            padding: 15px;
             color: white;
             cursor: pointer;
-            text-align: left;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .course-card:hover {
@@ -79,115 +31,54 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Category Colors */
         .STEM { background: linear-gradient(135deg, #007BFF, #0047A3); }
         .Business { background: linear-gradient(135deg, #28a745, #1E7D31); }
         .Humanities { background: linear-gradient(135deg, #9b59b6, #6A2E91); }
-
-        /* More Info Button */
-        .course-card button {
-            border: none;
-            padding: 8px 12px;
-            font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-            transition: background 0.3s;
-        }
-
-        .course-card button:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Pop-up Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            justify-content: center;
-            align-items: flex-end;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 20px 20px 0 0;
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transform: translateY(100%);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .modal.show {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal.show .modal-content {
-            transform: translateY(0);
-        }
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .course-list {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <?php
-        include("navbar.html");
-    ?>
+    <?php include("navbar.html"); ?>
 
     <div class="header">Course Information</div>
 
-    <div class="container">
-        <div class="search-filter-container">
-            <input type="text" class="search-bar" id="searchBar" placeholder="Search for a course..." onkeyup="filterCourses()">
-            <select class="filter-dropdown" id="filterCategory" onchange="filterCourses()">
-                <option value="all">All Categories</option>
-                <option value="STEM">STEM</option>
-                <option value="Business">Business</option>
-                <option value="Humanities">Humanities</option>
-            </select>
+    <div class="container mt-4">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="searchBar" placeholder="Search for a course..." onkeyup="filterCourses()">
+            </div>
+            <div class="col-md-6">
+                <select class="form-select" id="filterCategory" onchange="filterCourses()">
+                    <option value="all">All Categories</option>
+                    <option value="STEM">STEM</option>
+                    <option value="Business">Business</option>
+                    <option value="Humanities">Humanities</option>
+                </select>
+            </div>
         </div>
 
-        <div class="course-list" id="courseList"></div>
+        <div class="row mt-4" id="courseList"></div>
     </div>
 
     <!-- Modal -->
-    <div class="modal" id="modal" onclick="closeModalOutside(event)">
-        <div class="modal-content" id="modalContent" onclick="event.stopPropagation()">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle"></h2>
-            <p id="modalCategory"></p>
-            <p id="modalDescription"></p>
+    <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalCategory"></p>
+                    <p id="modalDescription"></p>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-
-
         const courses = [
             { title: "BSc Computer Science", category: "STEM", description: "Learn programming, AI, and cybersecurity." },
             { title: "BEng Mechanical Engineering", category: "STEM", description: "Explore mechanics, materials, and robotics." },
@@ -198,9 +89,11 @@
 
         function displayCourses(filteredCourses = courses) {
             document.getElementById('courseList').innerHTML = filteredCourses.map((course, index) => `
-                <div class="course-card ${course.category}">
-                    <h3>${course.title}</h3>
-                    <button onclick="openModal(${index})">More Info</button>
+                <div class="col-md-4">
+                    <div class="card course-card ${course.category} p-3" onclick="openModal(${index})">
+                        <h5>${course.title}</h5>
+                        <button class="btn btn-light btn-sm mt-2">More Info</button>
+                    </div>
                 </div>
             `).join('');
         }
@@ -220,14 +113,10 @@
             document.getElementById("modalTitle").innerText = course.title;
             document.getElementById("modalCategory").innerText = "Category: " + course.category;
             document.getElementById("modalDescription").innerText = course.description;
-            document.getElementById("modal").classList.add("show");
+            new bootstrap.Modal(document.getElementById("modal")).show();
         }
-
-        function closeModal() { document.getElementById("modal").classList.remove("show"); }
-        function closeModalOutside(event) { if (event.target === document.getElementById("modal")) closeModal(); }
 
         displayCourses();
     </script>
-
 </body>
 </html>
