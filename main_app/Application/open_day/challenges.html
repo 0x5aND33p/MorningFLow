@@ -219,8 +219,8 @@
             {
                 id: 1,
                 name: "Campus Scavenger Hunt",
-                description: "Scan QR codes at 5 different locations to complete the hunt.",
-                locations: ["MI Building", "MA Building", "MC Building", "ML Building", "MS Building"],
+                description: "Scan QR codes at 4 different locations to complete the hunt.",
+                locations: ["MI Building", "MA Building", "MC Building", "MD Building"],
                 completedLocations: [],
                 reward: "Explorer Badge",
                 isCompleted: false,
@@ -237,10 +237,10 @@
             {
                 id: 3,
                 name: "First University Lecture",
-                description: "Go to MC01 for the first ever lecture of your life. Scan the QR provided to learn a secret of the university.",
-                locations: ["MC01"],
+                description: "Go to MC001 for the first ever lecture of your life. Scan the QR provided to learn a secret of the university.",
+                locations: ["MC001"],
                 completedLocations: [],
-                reward: "University Secret. University of Wolverhampton have 20 computer las.",
+                reward: "University Secret. University of Wolverhampton have 20 computer LABs.",
                 isCompleted: false,
             },
             {
@@ -329,13 +329,13 @@
             }
 
             const firstLectureQuest = quests.find(q => q.id === 3);
-            if (firstLectureQuest && !firstLectureQuest.isCompleted && qrContent === "MC01") {
-                firstLectureQuest.completedLocations.push("MC01");
+            if (firstLectureQuest && !firstLectureQuest.isCompleted && qrContent === "MC001") {
+                firstLectureQuest.completedLocations.push("MC001");
                 checkQuestCompletion(firstLectureQuest);
             }
 
             const teacherTalkQuest = quests.find(q => q.id === 4);
-            if (teacherTalkQuest && !teacherTalkQuest.isCompleted && qrContent.toLowerCase() === "hiranpatel") {
+            if (teacherTalkQuest && !teacherTalkQuest.isCompleted && qrContent === "MA212") {
                 teacherTalkQuest.completedLocations.push("MA212");
                 checkQuestCompletion(teacherTalkQuest);
             }
