@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Map and Quests</title>
+    <title>Building Information</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,24 +37,23 @@
             font-weight: bold;
         }
 
-        /* Styled list with animation */
         .container-text ul {
             list-style-type: disc;
-            padding-left: 20px; /* Add padding for indentation */
+            padding-left: 20px; 
             font-size: 18px;
         }
 
         .container-text {
-            text-align: left; /* Align text to the left */
+            text-align: left; 
             margin-bottom: 20px;
             color: #333;
-            font-size: 18px; /* Normal text size */
+            font-size: 18px;
 			font-family: Arial, Helvetica, sans-serif;
-            font-weight: normal; /* Normal weight */
+            font-weight: normal;
         }
 
         .container-text li {
-            margin: 10px 0; /* Add spacing between items */
+            margin: 10px 0; 
             padding-left: 5px;
             font-weight: normal;
             font-size: 18px;
@@ -64,13 +63,11 @@
             animation: fadeInLeft 0.5s ease-in-out forwards;
         }
 
-        /* Staggered effect */
         .container-text li:nth-child(1) { animation-delay: 0.1s; }
         .container-text li:nth-child(2) { animation-delay: 0.3s; }
         .container-text li:nth-child(3) { animation-delay: 0.6s; }
         .container-text li:nth-child(4) { animation-delay: 0.8s; }
 
-        /* Animation effect */
         @keyframes fadeInLeft {
             from {
                 opacity: 0;
@@ -112,15 +109,14 @@
             max-width: 200px;
             max-height: 80px;
             white-space: nowrap;
-            text-align: left; /* Align button text to the left */
-            padding-left: 10px; /* Add padding for better readability */
+            text-align: left; 
+            padding-left: 10px;
         }
 
         .btn:hover {
             background-color: #0056b3;
         }
 
-        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
@@ -136,7 +132,7 @@
         }
 
         .modal-content {
-            text-align: left; /* Align modal content to the left */
+            text-align: left; 
         }
 
         .close {
@@ -180,7 +176,6 @@
             flex-shrink: 0;
         }
 
-        /* Hide scrollbar */
         .scrolling-images::-webkit-scrollbar {
             display: none;
         }
@@ -190,7 +185,6 @@
             scrollbar-width: none;
         }
 
-        /* Challenges Button Styles */
         .challenges-btn {
             display: block;
             margin: 20px auto;
@@ -213,7 +207,7 @@
 </head>
 <body>
     <div class="main-container">
-        <!-- Text inside the container -->
+        <!-- Text inside container -->
         <div class="container-text" id="text-content">
             <p>We offer a wide range of undergraduate courses designed to inspire learning, and have a vibrant history of academic excellence. Undergraduate students will develop academically as they prepare for a future career or further study in their desired field. Over the course of their degree, they’ll take advantage of unique opportunities, grow personally, and gain invaluable knowledge and skills to help them flourish in life.</p>
             <ul>
@@ -223,7 +217,6 @@
                 <li><strong>Support</strong> – You will be supported by teams to suit your individual needs. Our flexible approach encourages personalised learning that works for you.</li>
             </ul>
             <p>Click buttons on the map to get more knowledge about the University.</p>
-            <!-- Add the Challenges button here -->
             <button id="challenges-btn" class="challenges-btn">Challenges</button>
         </div>
 
@@ -237,19 +230,16 @@
         </div>
     </div>
 
-    <!-- Modal Popup -->
     <div id="modal" class="modal">
         <span class="close" id="close-modal">&times;</span>
         <div class="modal-content">
             <h2 id="modal-title">Information</h2>
             <p id="modal-text">This is the default information.</p>
             <div class="scrolling-images" id="scrolling-images">
-                <!-- Images will be added dynamically -->
             </div>
         </div>
     </div>
 
-    <!-- Overlay for modal background -->
     <div id="overlay" class="overlay"></div>
 
     <script>
@@ -263,18 +253,15 @@
             const scrollingImagesContainer = document.getElementById('scrolling-images');
             scrollingImagesContainer.innerHTML = ''; // Clear previous images
 
-            // Add images to the container
             images.forEach(image => {
                 const imgElement = document.createElement('img');
                 imgElement.src = image;
                 scrollingImagesContainer.appendChild(imgElement);
             });
 
-            // Show modal and overlay
             modal.style.display = 'block';
             overlay.style.display = 'block';
 
-            // Start auto-scrolling
             autoScrollImages(scrollingImagesContainer);
         }
 
@@ -284,25 +271,25 @@
         }
 
         function autoScrollImages(container) {
-            const scrollSpeed = 1; // Adjust scroll speed (pixels per frame)
+            const scrollSpeed = 1; 
             let scrollPosition = 0;
 
             function scroll() {
                 scrollPosition += scrollSpeed;
                 if (scrollPosition >= container.scrollWidth - container.clientWidth) {
-                    scrollPosition = 0; // Reset scroll position to start
+                    scrollPosition = 0; 
                 }
                 container.scrollLeft = scrollPosition;
                 requestAnimationFrame(scroll);
             }
 
-            scroll(); // Start scrolling
+            scroll(); 
         }
 
         closeModalBtn.addEventListener('click', closeModal);
         overlay.addEventListener('click', closeModal);
 
-        // Add event listeners to buttons
+        //Event listeners to buttons
         document.getElementById('btn1').addEventListener('click', function() {
             openModal(
                 'Ambika Paul Building',
@@ -317,7 +304,7 @@
                     <li>Teaching Rooms</li>
                     <li>Sports Centre and Gym</li>
                 </ul>`,
-                ['image1.jpg', 'image2.jpg']
+                ['image4.png', 'image5.jpg', 'image6.jpg']
             );
         });
 
@@ -332,7 +319,7 @@
                     <li>Lecture Theatre</li>
                     <li>Teaching Rooms</li>
                 </ul>`,
-                ['image1.png', 'image2.png', 'image3.png', 'image4.png']
+                ['image1.png', 'image2.jpg', 'image3.jpg']
             );
         });
 
@@ -349,7 +336,7 @@
                     <li>Teaching Rooms</li>
                     <li>Lecture Theatres</li>
                 </ul>`,
-                ['image5.jpg', 'image6.jpg']
+                ['image10.png', 'image11.jpg']
             );
         });
 
@@ -364,13 +351,12 @@
                     <li>Student Enabling Centre (ODOS)</li>
                     <li>Media Centre</li>
                 </ul>`,
-                ['image7.jpg', 'image8.jpg']
+                ['image7.jpg', 'image8.jpg', 'image9.jpg']
             );
         });
 
-        // Add event listener to the Challenges button
         document.getElementById('challenges-btn').addEventListener('click', function() {
-            window.location.href = 'challenges.html'; // Redirect to challenges.html
+            window.location.href = 'challenges.html'; 
         });
     </script>
 </body>
