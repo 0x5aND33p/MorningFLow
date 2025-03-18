@@ -131,7 +131,6 @@
             display: none;
         }
 
-        /* Custom Modal Styles */
         #custom-modal {
             display: none;
             position: fixed;
@@ -155,7 +154,6 @@
             cursor: pointer;
         }
 
-        /* Backdrop Styles */
         #backdrop {
             display: none;
             position: fixed;
@@ -167,40 +165,32 @@
             z-index: 1001;
         }
 
-        /* Container for completed challenges */
         #completed-quests {
             margin-top: 20px;
             width: 100%;
             max-width: 600px;
         }
 
-        /* Permanent Text Styles */
+
         .permanent-text {
-            color: #28a745; /* Green color */
+            color: #28a745; 
             font-weight: bold;
             margin-top: 10px;
             padding: 10px;
-            background-color: #e8f5e9; /* Light green background */
+            background-color: #e8f5e9;
             border-radius: 5px;
             border: 1px solid #28a745;
         }
     </style>
-    <!-- Include Html5-QRCode library -->
     <script src="https://unpkg.com/html5-qrcode"></script>
-    <!-- Include canvas-confetti for fireworks effect -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <h1>Challenges</h1>
-
-    <!-- Container for active quests -->
     <div class="quest-container" id="active-quests">
-        <!-- Active quests will be dynamically added here -->
     </div>
 
-    <!-- Container for completed challenges -->
     <div class="quest-container" id="completed-quests">
-        <!-- Completed challenges will be dynamically added here -->
     </div>
 
     <div class="actions">
@@ -214,16 +204,13 @@
         <div id="qr-reader"></div>
     </div>
 
-    <!-- Completed Message -->
     <div id="completed-message" class="completed-message"></div>
 
-    <!-- Custom Modal -->
     <div id="custom-modal">
         <p id="modal-message"></p>
         <button onclick="closeModal()">OK</button>
     </div>
 
-    <!-- Backdrop -->
     <div id="backdrop"></div>
 
     <script>
@@ -242,7 +229,7 @@
                 id: 2,
                 name: "Talk to University Members",
                 description: "Talk to 5 University members and scan their QR codes to earn a free coffee coupon.",
-                locations: [], // No specific locations, just scanning member QR codes
+                locations: [], 
                 completedLocations: [],
                 reward: "Free Coffee Coupon. Say the word 'Best Uni' to the staff member of the cafeteria to get a free Cappucino.",
                 isCompleted: false,
@@ -269,7 +256,7 @@
 
         let html5QrCode;
 
-        // Function to check if a quest is completed
+
         function checkQuestCompletion(quest) {
             if (
                 (quest.id === 1 && quest.completedLocations.length === quest.locations.length) ||
@@ -279,55 +266,43 @@
             ) {
                 quest.isCompleted = true;
 
-                // Step 1: Trigger fireworks
                 triggerFireworks();
-
-                // Step 2: Show the pop-up message after a short delay (e.g., 2 seconds)
                 setTimeout(() => {
                     awardReward(quest.reward);
-                    addPermanentText(quest.name); // Add permanent text
-                }, 2000); // 2000ms = 2 seconds delay
+                    addPermanentText(quest.name); 
+                }, 2000); 
             }
         }
 
-        // Function to add permanent text for completed quests
         function addPermanentText(questName) {
             const completedQuestsContainer = document.getElementById("completed-quests");
 
-            // Create a new div for the permanent text
             const permanentText = document.createElement("div");
             permanentText.className = "permanent-text";
             permanentText.textContent = `Challenge Completed: ${questName}`;
 
-            // Append the permanent text to the completed quests container
             completedQuestsContainer.appendChild(permanentText);
         }
 
-        // Function to award a reward
         function awardReward(reward) {
             const modal = document.getElementById("custom-modal");
             const backdrop = document.getElementById("backdrop");
             const modalMessage = document.getElementById("modal-message");
 
-            // Set the reward message
             modalMessage.textContent = `Congratulations! You earned the ${reward}`;
 
-            // Show the modal and backdrop
             modal.style.display = "block";
             backdrop.style.display = "block";
         }
 
-        // Function to close the modal
         function closeModal() {
             const modal = document.getElementById("custom-modal");
             const backdrop = document.getElementById("backdrop");
 
-            // Hide the modal and backdrop
             modal.style.display = "none";
             backdrop.style.display = "none";
         }
 
-        // Function to trigger fireworks
         function triggerFireworks() {
             confetti({
                 particleCount: 100,
@@ -336,9 +311,7 @@
             });
         }
 
-        // Function to process scanned QR code
         function processQRCode(qrContent) {
-            // Check if the QR code is for the Campus Scavenger Hunt
             const scavengerHuntQuest = quests.find(q => q.id === 1);
             if (scavengerHuntQuest && !scavengerHuntQuest.isCompleted && scavengerHuntQuest.locations.includes(qrContent)) {
                 if (!scavengerHuntQuest.completedLocations.includes(qrContent)) {
@@ -349,21 +322,18 @@
                 }
             }
 
-            // Check if the QR code is for the Talk to University Members quest
             const memberQuest = quests.find(q => q.id === 2);
             if (memberQuest && !memberQuest.isCompleted && qrContent.toLowerCase() === "member") {
                 memberQuest.completedLocations.push("Member QR");
                 checkQuestCompletion(memberQuest);
             }
 
-            // Check if the QR code is for the First University Lecture quest
             const firstLectureQuest = quests.find(q => q.id === 3);
             if (firstLectureQuest && !firstLectureQuest.isCompleted && qrContent === "MC01") {
                 firstLectureQuest.completedLocations.push("MC01");
                 checkQuestCompletion(firstLectureQuest);
             }
 
-            // Check if the QR code/keyword is for the Teacher Talk quest
             const teacherTalkQuest = quests.find(q => q.id === 4);
             if (teacherTalkQuest && !teacherTalkQuest.isCompleted && qrContent.toLowerCase() === "hiranpatel") {
                 teacherTalkQuest.completedLocations.push("MA212");
@@ -373,10 +343,9 @@
             displayQuests();
         }
 
-        // Function to display active quests
         function displayQuests() {
             const activeQuestsContainer = document.getElementById("active-quests");
-            activeQuestsContainer.innerHTML = ""; // Clear previous active quests
+            activeQuestsContainer.innerHTML = ""; 
 
             quests.forEach(quest => {
                 if (!quest.isCompleted) {
@@ -395,15 +364,12 @@
             });
         }
 
-        // Function to start the QR scanner
         function startQRScanner() {
             const qrScannerDiv = document.getElementById("qr-scanner");
             qrScannerDiv.style.display = "block";
 
-            // Initialize the QR scanner
             html5QrCode = new Html5Qrcode("qr-reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-                // Stop the scanner once a QR code is successfully scanned
                 html5QrCode.stop().then(() => {
                     qrScannerDiv.style.display = "none";
                     processQRCode(decodedText);
@@ -421,7 +387,6 @@
                 });
         }
 
-        // Function to close the QR scanner
         function closeQRScanner() {
             const qrScannerDiv = document.getElementById("qr-scanner");
             if (html5QrCode) {
@@ -434,8 +399,6 @@
                 qrScannerDiv.style.display = "none";
             }
         }
-
-        // Initial display of quests
         displayQuests();
     </script>
 </body>
