@@ -9,9 +9,18 @@
   </head>
   <body>
     <?php
-      session_start();
-      $user_id = $_SESSION['user_id'] ?? null;
-      include ("navbar.html");
+        session_start();
+        $user_id = $_SESSION['user_id'] ?? null;
+        include ("navbar.html");
+        include ("db_connection.php");
+
+        $conn = db_connections($password);
+
+        $stmt = $conn->prepare("SELECT day,time,subject,activity, location FROM user_schedule
+                                WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
     ?>
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
