@@ -6,14 +6,14 @@
     <title>Building Information</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f4f4f9;
+            background-color: #f0f2f5;
             background-image: url('uniPic.jpg'); /* Add your background image path here */
             background-size: cover;
             background-position: center;
@@ -22,61 +22,11 @@
         .main-container {
             width: 90%;
             max-width: 800px;
-            background-color: #FFFDF5;
+            background-color: rgba(255, 253, 245, 0.95);
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
             box-sizing: border-box;
-        }
-
-        .container-text {
-            text-align: left; /* Align text to the left */
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .container-text ul {
-            list-style-type: disc;
-            padding-left: 20px; 
-            font-size: 18px;
-        }
-
-        .container-text {
-            text-align: left; 
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 18px;
-			font-family: Arial, Helvetica, sans-serif;
-            font-weight: normal;
-        }
-
-        .container-text li {
-            margin: 10px 0; 
-            padding-left: 5px;
-            font-weight: normal;
-            font-size: 18px;
-            position: relative;
-            opacity: 0;
-            transform: translateX(-20px);
-            animation: fadeInLeft 0.5s ease-in-out forwards;
-        }
-
-        .container-text li:nth-child(1) { animation-delay: 0.1s; }
-        .container-text li:nth-child(2) { animation-delay: 0.3s; }
-        .container-text li:nth-child(3) { animation-delay: 0.6s; }
-        .container-text li:nth-child(4) { animation-delay: 0.8s; }
-
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
         }
 
         .map-section {
@@ -93,28 +43,33 @@
             max-width: 100%;
             border-radius: 10px;
             object-fit: cover;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .btn {
             position: absolute;
-            padding: 1vw 1vw;
+            padding: 0.8vw 1.2vw;
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 1vw;
+            border-radius: 12px;
             cursor: pointer;
             transform: translate(-50%, -50%);
             min-width: 10px;
             min-height: 10px;
-            max-width: 200px;
+            max-width: 220px;
             max-height: 80px;
             white-space: nowrap;
             text-align: left; 
             padding-left: 10px;
+			font-weight: 600;
+			box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+			transition: transform 0.2s ease, background 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #0056b3;
+			background: linear-gradient(135deg, #0056b3, #1f75cc);
+			transform: translate(-50%, -50%) scale(1.05);
         }
 
         .modal {
@@ -124,9 +79,9 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 300px;
-            padding: 20px;
+            padding: 25px;
             background-color: #FFFDF5;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 1000;
             border-radius: 10px;
         }
@@ -138,7 +93,7 @@
         .close {
             position: absolute;
             top: 10px;
-            right: 10px;
+            right: 15px;
             cursor: pointer;
             font-size: 20px;
             color: #888;
@@ -164,30 +119,23 @@
             overflow-x: hidden;
             margin-top: 10px;
             position: relative;
+			gap: 10px;
             width: 100%;
         }
 
         .scrolling-images img {
-            width: 300px;
-            height: 300px;
+            width: 260px;
+            height: 180px;
             margin-right: 10px;
             border-radius: 5px;
             object-fit: cover;
             flex-shrink: 0;
         }
 
-        .scrolling-images::-webkit-scrollbar {
-            display: none;
-        }
-
-        .scrolling-images {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
 
         .challenges-btn {
             display: block;
-            margin: 20px auto;
+            margin: 25px auto;
             padding: 15px 30px;
 			width: 100%;
             background-color: #007bff;
@@ -201,32 +149,58 @@
         }
 
         .challenges-btn:hover {
-            background-color: #0056b3;
+			background-color: #0056b3;
+			transform: scale(1.03);
         }
+		
+		/* Add a subtle divider line */
+		.header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+		}
+		.logo {
+			height: 100px;
+			width: auto;
+        }
+
+		/* Add a smooth hover effect to the title */
+		.title {
+            margin: 0;
+            color: #003366;
+            font-size: 24px;
+            font-weight: 700;
+		}
+
+		
+		
+		
+		
     </style>
 </head>
 <body>
     <div class="main-container">
+		        <!-- Header with logo and title -->
+        <div class="header">
+            <img src="UniLogo.jpg" alt="University Logo" class="logo">
+            <h1 class="title">Let's Explore the University</h1>
+        </div>
+	
+	
         <!-- Text inside container -->
         <div class="container-text" id="text-content">
-            <p>We offer a wide range of undergraduate courses designed to inspire learning, and have a vibrant history of academic excellence. Undergraduate students will develop academically as they prepare for a future career or further study in their desired field. Over the course of their degree, they’ll take advantage of unique opportunities, grow personally, and gain invaluable knowledge and skills to help them flourish in life.</p>
-            <ul>
-                <li><strong>Employability</strong> – 89% of our UK graduates are employed, in education, or running their own business according to the latest Graduate Outcomes results.</li>
-                <li><strong>Opportunity</strong> – We want you to have every opportunity to prepare for your future, so over the last 5 years we have spent millions upgrading the buildings and equipment across our campuses, giving you facilities to support your studies, and prepare you for your career.</li>
-                <li><strong>Community</strong> – You’ll be welcomed into a diverse, rich and vibrant community of students, ready to embark on undergraduate study alongside you.</li>
-                <li><strong>Support</strong> – You will be supported by teams to suit your individual needs. Our flexible approach encourages personalised learning that works for you.</li>
-            </ul>
             <p>Click buttons on the map to get more knowledge about the University.</p>
-            <button id="challenges-btn" class="challenges-btn">Challenges</button>
         </div>
 
         <!-- Map Section -->
         <div class="map-section">
             <img id="rotatingImage" src="University.png" alt="Static Map">
-            <button class="btn" id="btn1" style="top: 34%; left: 30%;">Ambika Paul </button>
+            <button class="btn" id="btn1" style="top: 30%; left: 30%;">Ambika Paul </button>
             <button class="btn" id="btn2" style="top: 10%; left: 50%;">Millennium City </button>
-            <button class="btn" id="btn3" style="top: 70%; left: 38%;">Wulfruna</button>
-            <button class="btn" id="btn4" style="top: 36%; left: 70%;">Alan Turing</button>
+            <button class="btn" id="btn3" style="top: 62%; left: 38%;">Wulfruna</button>
+            <button class="btn" id="btn4" style="top: 33%; left: 70%;">Alan Turing</button>
+			<button id="challenges-btn" class="challenges-btn">Take The Challenge</button>
         </div>
     </div>
 
