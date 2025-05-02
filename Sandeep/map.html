@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Information</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            background-image: url('uniPic.jpg'); /* Add your background image path here */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .main-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: rgba(255, 253, 245, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .map-section {
+            position: relative;
+            width: 100%;
+            text-align: center;
+        }
+
+        #rotatingImage {
+            width: 100%;
+            height: auto;
+            min-width: 300px;
+            min-height: 400px;
+            max-width: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn {
+            position: absolute;
+            padding: 1vw 1.2vw;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            min-height: 10px;
+            max-width: 220px;
+            max-height: 80px;
+            white-space: nowrap;
+            text-align: left;            
+			font-weight: 600;
+			box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+			transition: transform 0.4s ease, background 0.4s ease;
+        }
+
+        .btn:hover {
+			background: linear-gradient(135deg, #0056b3, #1f75cc);
+			transform: translate(-50%, -50%) scale(1.50);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 25px;
+            background-color: #FFFDF5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border-radius: 10px;
+        }
+
+        .modal-content {
+            text-align: left; 
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #888;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .scrolling-images {
+            display: flex;
+            overflow-x: hidden;
+            margin-top: 10px;
+            position: relative;
+			gap: 10px;
+            width: 100%;
+        }
+
+        .scrolling-images img {
+            width: 280px;
+            height: 200px;
+            margin-right: 10px;
+            border-radius: 5px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+
+        .challenges-btn {
+            display: block;
+            margin: 25px auto;
+            padding: 15px 30px;
+			width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 2s ease;
+			box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+        }
+
+        .challenges-btn:hover {
+			background-color: #0056b3;
+			transform: scale(1.06);
+        }
+		
+		
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        .title {
+            color: #003366;
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 700;
+            text-align: left;
+            margin-bottom: 1px;
+			
+        }
+		
+        .divider {
+            width: 100%;
+            height: 3px; /* Maximum thickness */
+            margin: 5px 0 10px 0;
+            border: none;
+            background: linear-gradient(
+                to right,
+                #555 0%,
+                #999 30%,
+                transparent 100%
+            );
+		
+		
+		
+		
+    </style>
+</head>
+<body>
+    <div class="main-container">
+		        <!-- Header with logo and title -->
+        <div class="header">
+            <h1 class="title">Let's Explore the University</h1>
+			<hr class="divider">
+        </div>
+	
+	
+        <!-- Text inside container -->
+        <div class="container-text" id="text-content">
+            <p>Click buttons on the map to get more knowledge about the University.</p>
+        </div>
+
+        <!-- Map Section -->
+        <div class="map-section">
+            <img id="rotatingImage" src="University.png" alt="Static Map">
+            <button class="btn" id="btn1" style="top: 30%; left: 30%;">Ambika Paul </button>
+            <button class="btn" id="btn2" style="top: 10%; left: 50%;">Millennium City </button>
+            <button class="btn" id="btn3" style="top: 62%; left: 38%;">Wulfruna</button>
+            <button class="btn" id="btn4" style="top: 33%; left: 70%;">Alan Turing</button>
+			<button id="challenges-btn" class="challenges-btn">Take The Challenge</button>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <span class="close" id="close-modal">&times;</span>
+        <div class="modal-content">
+            <h2 id="modal-title">Information</h2>
+            <p id="modal-text">This is the default information.</p>
+            <div class="scrolling-images" id="scrolling-images">
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay"></div>
+
+    <script>
+        const modal = document.getElementById('modal');
+        const overlay = document.getElementById('overlay');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        function openModal(title, text, images = []) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-text').innerHTML = text;
+            const scrollingImagesContainer = document.getElementById('scrolling-images');
+            scrollingImagesContainer.innerHTML = ''; // Clear previous images
+
+            images.forEach(image => {
+                const imgElement = document.createElement('img');
+                imgElement.src = image;
+                scrollingImagesContainer.appendChild(imgElement);
+            });
+
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+
+            ImageScroll(scrollingImagesContainer);
+        }
+
+        function closeInfo() {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        function ImageScroll(container) {
+            const scrollSpeed = 1; 
+            let scrollPosition = 0;
+
+            function scroll() {
+                scrollPosition += scrollSpeed;
+                if (scrollPosition >= container.scrollWidth - container.clientWidth) {
+                    scrollPosition = 0; 
+                }
+                container.scrollLeft = scrollPosition;
+                requestAnimationFrame(scroll);
+            }
+
+            scroll(); 
+        }
+
+        closeModalBtn.addEventListener('click', closeInfo);
+        overlay.addEventListener('click', closeInfo);
+
+        //Event listeners to buttons
+        document.getElementById('btn1').addEventListener('click', function() {
+            openModal(
+                'Ambika Paul Building',
+                `The current student gateway, MD Building is home to the main library, Students' Union, sports centre and help and advice points.<br><br>
+                Its facilities are:
+                <ul>
+                    <li>GO Shop</li>
+                    <li>Student's Union</li>
+                    <li>Careers and Employment Services (ODOS)</li>
+                    <li>Harrison Learning Centre</li>
+                    <li>Research Hub</li>
+                    <li>Teaching Rooms</li>
+                    <li>Sports Centre and Gym</li>
+                </ul>`,
+                ['image4.png', 'image5.jpg', 'image6.jpg']
+            );
+        });
+
+        document.getElementById('btn2').addEventListener('click', function() {
+            openModal(
+                'Millennium City Building',
+                `One of the main social spaces on campus, Millennium City Building (MC) includes our main dining areas, and Starbucks branch.<br><br>
+                It's features are:
+                <ul>
+                    <li>Courtyard Kitchen</li>
+                    <li>Costa Coffee</li>
+                    <li>Lecture Theatre</li>
+                    <li>Teaching Rooms</li>
+                </ul>`,
+                ['image1.png', 'image2.jpg', 'image3.jpg']
+            );
+        });
+
+        document.getElementById('btn3').addEventListener('click', function() {
+            openModal(
+                'Wulfruna Building',
+                `The historic MA Building houses the University's main reception, and is home to the Arena Theatre.<br><br>
+                Its features are:
+                <ul>
+                    <li>Main Reception</li>
+                    <li>Campus Operations</li>
+                    <li>Offices of the Vice-Chancellor</li>
+                    <li>Arena Theatre</li>
+                    <li>Teaching Rooms</li>
+                    <li>Lecture Theatres</li>
+                </ul>`,
+                ['image10.png', 'image11.jpg']
+            );
+        });
+
+        document.getElementById('btn4').addEventListener('click', function() {
+            openModal(
+                'Alan Turing Building',
+                `The Alan Turing Building (MI) contains several specialist laboratories designed to support the technical study carried out within the University.<br><br>
+                Its facilities are:
+                <ul>
+                    <li>Student Centre South</li>
+                    <li>Teaching Rooms</li>
+                    <li>Student Enabling Centre (ODOS)</li>
+                    <li>Media Centre</li>
+                </ul>`,
+                ['image7.jpg', 'image8.jpg', 'image9.jpg']
+            );
+        });
+
+        document.getElementById('challenges-btn').addEventListener('click', function() {
+            window.location.href = 'challenges.html'; 
+        });
+		
+		
+		
+    </script>
+	<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+	<df-messenger
+	  chat-title="PathFinder"
+	  agent-id="ff5fd13d-16da-486c-b432-2542cdca2286"
+	  language-code="en"
+	></df-messenger>
+</body>
+</html>
