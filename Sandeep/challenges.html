@@ -62,7 +62,7 @@
 	/* Quest heading */
 	.quest h3 {
 		margin: 0;
-		color: #007bff;
+		color: #0033cc;
 	}
 
 	/* Quest description text */
@@ -98,7 +98,8 @@
 
 	/* Button styling */
 	.actions button {
-		padding: 10px 20px;
+		padding: 10px 10px;
+		font-size: 20px;
 		background-color: #007bff;
 		color: white;
 		border: none;
@@ -119,9 +120,9 @@
 		transform: translate(-50%, -50%);
 		width: 90%;
 		max-width: 400px;
-		background-color: white;
+		background-color: #f0f2f5;
 		border-radius: 10px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 		display: none;
 		z-index: 1000;
 	}
@@ -130,6 +131,7 @@
 	#qr-scanner video {
 		width: 100%;
 		border-radius: 10px 10px 0 0;
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 	}
 
 	/* Top bar of the scanner window */
@@ -145,9 +147,9 @@
 	.close-scanner {
 		background: none;
 		border: none;
-		font-size: 20px;
+		font-size: 25px;
 		cursor: pointer;
-		color: #333;
+		color: #000000;
 	}
 
 	.close-scanner:hover {
@@ -160,26 +162,29 @@
 		top: 20px;
 		left: 50%;
 		transform: translateX(-50%);
-		background-color: #28a745;
+		background-color: #f0f2f5;
 		color: white;
 		padding: 10px 20px;
-		border-radius: 5px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		border-radius: 10px;
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 		z-index: 1001;
 		display: none;
 	}
 
 	/* Popup modal for rewards */
 	#custom-modal {
-		display: none;
+		display: none; 
 		position: fixed;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 		background-color: white;
-		padding: 20px;
+		padding: 40px; /* Increase padding for more internal space */
+		width: 80%; /* Increase width (you can change the percentage or use px, e.g., 600px) */
+		max-width: 800px; /* You can set a maximum width */
+		height: 400px; /* Set a fixed height if you want */
 		border-radius: 10px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 		z-index: 1002;
 	}
 
@@ -194,17 +199,7 @@
 		cursor: pointer;
 	}
 
-	/* Dark background behind modals */
-	#backdrop {
-		display: none;
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
-		z-index: 1001;
-	}
+
 
 	/* Container for completed quest texts */
 	#completed-quests {
@@ -222,6 +217,7 @@
 		background-color: #e8f5e9;
 		border-radius: 5px;
 		border: 1px solid #28a745;
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 	}
     </style>
     <script src="https://unpkg.com/html5-qrcode"></script>
