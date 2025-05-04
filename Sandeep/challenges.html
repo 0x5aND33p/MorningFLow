@@ -269,65 +269,61 @@
 
 
 <script>
-    const STORAGE_KEY = "uni_challenges";
+    const quests = [
+        {
+            id: 1,
+            name: "Campus Scavenger Hunt",
+            description: "Scan QR codes at 4 different locations to complete the hunt.",
+            locations: ["MI Building", "MA Building", "MC Building", "MD Building"],
+            completedLocations: [],
+            reward: "Explorer Badge",
+            isCompleted: false,
+        },
+        {
+            id: 2,
+            name: "Talk to University Members",
+            description: "Talk to 5 University members and scan their QR codes to earn a free coffee coupon.",
+            locations: [],
+            completedLocations: [],
+            reward: "Free Coffee Coupon. Say the word 'Best Uni' to the staff member of the cafeteria to get a free Cappucino.",
+            isCompleted: false,
+        },
+        {
+            id: 3,
+            name: "First University Lecture",
+            description: "Go to MC001 for the first ever lecture of your life. Scan the QR provided to learn a secret of the university.",
+            locations: ["MC001"],
+            completedLocations: [],
+            reward: "University Secret. University of Wolverhampton have 20 computer LABs.",
+            isCompleted: false,
+        },
+        {
+            id: 4,
+            name: "Teacher Talk",
+            description: "Go to room MA212 and talk to Professor Hiran Patel about your future goals. After the talk, the professor will give you a word to log in to the computer and create your first game with the help of the previous student.",
+            locations: ["MA212"],
+            completedLocations: [],
+            reward: "Game Development Access. Word to login to computer:'Unity'. ",
+            isCompleted: false,
+        },
+    ];
 
-    // Load cached data or use default quests
-    function loadQuests() {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            try {
-                return JSON.parse(saved);
-            } catch (e) {
-                console.warn("Failed to parse saved data. Using default.");
-            }
-        }
-        return [
-            {
-                id: 1,
-                name: "Campus Scavenger Hunt",
-                description: "Scan QR codes at 4 different locations to complete the hunt.",
-                locations: ["MI Building", "MA Building", "MC Building", "MD Building"],
-                completedLocations: [],
-                reward: "Explorer Badge",
-                isCompleted: false,
-            },
-            {
-                id: 2,
-                name: "Talk to University Members",
-                description: "Talk to 5 University members and scan their QR codes to earn a free coffee coupon.",
-                locations: [],
-                completedLocations: [],
-                reward: "Free Coffee Coupon. Say the word 'Best Uni' to the staff member of the cafeteria to get a free Cappucino.",
-                isCompleted: false,
-            },
-            {
-                id: 3,
-                name: "First University Lecture",
-                description: "Go to MC001 for the first ever lecture of your life. Scan the QR provided to learn a secret of the university.",
-                locations: ["MC001"],
-                completedLocations: [],
-                reward: "University Secret. University of Wolverhampton have 20 computer LABs.",
-                isCompleted: false,
-            },
-            {
-                id: 4,
-                name: "Teacher Talk",
-                description: "Go to room MA212 and talk to Professor Hiran Patel about your future goals. After the talk, the professor will give you a word to log in to the computer and create your first game with the help of the previous student.",
-                locations: ["MA212"],
-                completedLocations: [],
-                reward: "Game Development Access. Word to login to computer:'Unity'. ",
-                isCompleted: false,
-            },
-        ];
-    }
-
-    // Save quests state to localStorage
-    function saveQuests() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(quests));
-    }
-
-    let quests = loadQuests();
     let html5QrCode;
+
+    function saveQuestsToCache() {
+        localStorage.setItem("quests", JSON.stringify(quests));
+    }
+
+    function loadQuestsFromCache() {
+        const cached = localStorage.getItem("quests");
+        if (cached) {
+            const parsed = JSON.parse(cached);
+            parsed.forEach((cachedQuest, i) => {
+                quests[i].completedLocations = cachedQuest.completedLocations;
+                quests[i].isCompleted = cachedQuest.isCompleted;
+            });
+        }
+    }
 
     function checkQuestCompletion(quest) {
         if (
@@ -336,25 +332,28 @@
             (quest.id === 3 && quest.completedLocations.length === 1) ||
             (quest.id === 4 && quest.completedLocations.length === 1)
         ) {
-            if (!quest.isCompleted) {
-                quest.isCompleted = true;
-                triggerFireworks();
-                setTimeout(() => {
-                    awardReward(quest.reward);
-                    addPermanentText(quest.name);
-                }, 2000);
-                saveQuests(); // Save after completing
-            }
+            quest.isCompleted = true;
+            triggerFireworks();
+            setTimeout(() => {
+                awardReward(quest.reward);
+                addPermanentText(quest.name);
+                saveQuestsToCache();
+                displayQuests();
+            }, 2000);
+        } else {
+            saveQuestsToCache();
+            displayQuests();
         }
     }
 
     function addPermanentText(questName) {
         const completedQuestsContainer = document.getElementById("completed-quests");
-
+        if ([...completedQuestsContainer.children].some(el => el.textContent.includes(questName))) {
+            return;
+        }
         const permanentText = document.createElement("div");
         permanentText.className = "permanent-text";
         permanentText.textContent = `Challenge Completed: ${questName}`;
-
         completedQuestsContainer.appendChild(permanentText);
     }
 
@@ -362,15 +361,16 @@
         const modal = document.getElementById("custom-modal");
         const backdrop = document.getElementById("backdrop");
         const modalMessage = document.getElementById("modal-message");
-
         modalMessage.textContent = `Congratulations! You earned the ${reward}`;
         modal.style.display = "block";
         backdrop.style.display = "block";
     }
 
     function closeModal() {
-        document.getElementById("custom-modal").style.display = "none";
-        document.getElementById("backdrop").style.display = "none";
+        const modal = document.getElementById("custom-modal");
+        const backdrop = document.getElementById("backdrop");
+        modal.style.display = "none";
+        backdrop.style.display = "none";
     }
 
     function triggerFireworks() {
@@ -387,6 +387,7 @@
             if (!scavengerHuntQuest.completedLocations.includes(qrContent)) {
                 scavengerHuntQuest.completedLocations.push(qrContent);
                 checkQuestCompletion(scavengerHuntQuest);
+                return;
             } else {
                 alert(`You've already scanned the QR code for ${qrContent}.`);
             }
@@ -396,49 +397,46 @@
         if (memberQuest && !memberQuest.isCompleted && qrContent.toLowerCase() === "member") {
             memberQuest.completedLocations.push("Member QR");
             checkQuestCompletion(memberQuest);
+            return;
         }
 
         const firstLectureQuest = quests.find(q => q.id === 3);
         if (firstLectureQuest && !firstLectureQuest.isCompleted && qrContent === "MC001") {
             firstLectureQuest.completedLocations.push("MC001");
             checkQuestCompletion(firstLectureQuest);
+            return;
         }
 
         const teacherTalkQuest = quests.find(q => q.id === 4);
         if (teacherTalkQuest && !teacherTalkQuest.isCompleted && qrContent === "MA212") {
             teacherTalkQuest.completedLocations.push("MA212");
             checkQuestCompletion(teacherTalkQuest);
+            return;
         }
 
-        saveQuests(); // Save after QR code processing
-        displayQuests(); // Refresh quests
+        saveQuestsToCache();
+        displayQuests();
     }
 
     function displayQuests() {
         const activeQuestsContainer = document.getElementById("active-quests");
-        const completedQuestsContainer = document.getElementById("completed-quests");
         activeQuestsContainer.innerHTML = "";
-        completedQuestsContainer.innerHTML = "";
 
         quests.forEach(quest => {
-            if (quest.isCompleted) {
-                addPermanentText(quest.name);
-            } else {
+            if (!quest.isCompleted) {
                 const questElement = document.createElement("div");
                 questElement.className = "quest";
-                const total = quest.id === 2 ? 5 : quest.locations.length;
-                const progress = quest.completedLocations.length;
-                const percent = (progress / total) * 100;
-
                 questElement.innerHTML = `
                     <h3>${quest.name}</h3>
                     <p>${quest.description}</p>
-                    <p>Progress: ${progress}/${total}</p>
+                    <p>Progress: ${quest.completedLocations.length}/${quest.id === 2 ? 5 : quest.locations.length}</p>
                     <div class="progress-bar">
-                        <div class="progress" style="width: ${percent}%"></div>
+                        <div class="progress" style="width: ${(quest.completedLocations.length / (quest.id === 2 ? 5 : quest.locations.length)) * 100}%"></div>
                     </div>
                 `;
                 activeQuestsContainer.appendChild(questElement);
+            } else {
+                addPermanentText(quest.name);
             }
         });
     }
@@ -448,10 +446,10 @@
         qrScannerDiv.style.display = "block";
 
         html5QrCode = new Html5Qrcode("qr-reader");
-        const qrCodeSuccessCallback = (decodedText) => {
+        const qrCodeSuccessCallback = (decodedText, decodedResult) => {
             html5QrCode.stop().then(() => {
                 qrScannerDiv.style.display = "none";
-                processQRCode(decodedText.trim());
+                processQRCode(decodedText);
             }).catch(err => {
                 console.error("Failed to stop the QR scanner:", err);
             });
@@ -479,7 +477,8 @@
         }
     }
 
-    // On load
+    // Load progress from cache and display quests on page load
+    loadQuestsFromCache();
     displayQuests();
 </script>
 </body>
