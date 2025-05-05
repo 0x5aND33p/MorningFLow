@@ -368,8 +368,9 @@
 
     function triggerFireworks() {
         confetti({
-            particleCount: 100,
-            spread: 100,
+			spread: 100,
+			ticks: 300,
+			gravity: 0.8,
             origin: { y: 0.6 },
         });
     }
