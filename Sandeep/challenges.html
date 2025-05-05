@@ -147,7 +147,7 @@
 	.close-scanner {
 		background: none;
 		border: none;
-		font-size: 25px;
+		font-size: 30px;
 		cursor: pointer;
 		color: #000000;
 	}
@@ -163,7 +163,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		background-color: #f0f2f5;
-		color: white;
+		color: #f0f2f5;
 		padding: 10px 20px;
 		border-radius: 10px;
 		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
@@ -179,10 +179,7 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		background-color: #f0f2f5;
-		padding: 40px; /* Increase padding for more internal space */
-		width: 40%; /* Increase width (you can change the percentage or use px, e.g., 600px) */
-		max-width: 800px; /* You can set a maximum width */
-		height: 100px; /* Set a fixed height if you want */
+		padding: 30px; 
 		border-radius: 10px;
 		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 		z-index: 1002;
@@ -268,38 +265,38 @@
     const quests = [
         {
             id: 1,
-            name: "Campus Scavenger Hunt",
-            description: "Scan QR codes at 4 different locations to complete the hunt.",
+            name: "Explore & Unlock: A Campus Scavenger Hunt",
+            description: "Scan QR codes at four different locations to complete the hunt and unlock an exciting reward!",
             locations: ["MI Building", "MA Building", "MC Building", "MD Building"],
             completedLocations: [],
-            reward: "Explorer Badge",
+            reward: "Use the keyword "EX345". Meet a colleague at any university lab to explore all the software available for you to use during your time at university.",
             isCompleted: false,
         },
         {
             id: 2,
-            name: "Talk to University Members",
-            description: "Talk to 5 University members and scan their QR codes to earn a free coffee coupon.",
+            name: "Chat, Scan, Sip!",
+            description: "Connect with 5 university members, scan their QR codes, and enjoy a free coffee on us!",
             locations: [],
             completedLocations: [],
-            reward: "Free Coffee Coupon. Say the word 'Best Uni' to the staff member of the cafeteria to get a free Cappucino.",
+            reward: "Say the phrase "Love Wlv" to a cafeteria staff member to enjoy a free cappuccino!",
             isCompleted: false,
         },
         {
             id: 3,
             name: "First University Lecture",
-            description: "Go to MC001 for the first ever lecture of your life. Scan the QR provided to learn a secret of the university.",
+            description: "Head to MC001 for the first lecture of your university journey and receive a prize upon completing the lecture!",
             locations: ["MC001"],
             completedLocations: [],
-            reward: "University Secret. University of Wolverhampton have 20 computer LABs.",
+            reward: "Get a free bag filled with goodies—perfect for your time at the University of Wolverhampton!.",
             isCompleted: false,
         },
         {
             id: 4,
-            name: "Teacher Talk",
-            description: "Go to room MA212 and talk to Professor Hiran Patel about your future goals. After the talk, the professor will give you a word to log in to the computer and create your first game with the help of the previous student.",
+            name: "Future Focus: Career Advice",
+            description: "Visit the garden, chat with a career advisor, and find out if this path is the right fit for you!",
             locations: ["MA212"],
             completedLocations: [],
-            reward: "Game Development Access. Word to login to computer:'Unity'. ",
+            reward: "Receive a Career Planning Guide with valuable tips for exploring and shaping your career path!",
             isCompleted: false,
         },
     ];
