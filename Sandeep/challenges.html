@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Challenges</title>
-	
-	
     <style>
 	/* General body style: centers everything, sets background image and font */
 	body {
@@ -196,8 +194,6 @@
 		cursor: pointer;
 	}
 
-
-
 	/* Container for completed quest texts */
 	#completed-quests {
 		margin-top: 20px;
@@ -216,41 +212,46 @@
 		border: 1px solid #28a745;
 		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 	}
+	
     </style>
+	<!-- External libraries: QR code scanner and confetti effect -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
+	<!-- Main container for all the content content -->
     <div class="main-container">
-
+		<!-- Page header with title and divider -->
         <div class="header">
             <h1 class="title">Begin The Challenges</h1>
             <hr class="divider">
         </div>
 		
-		       
+		<!-- Instructions for users -->
         <div class="container-text" id="text-content">
             <p>Follow the instructions in each challenge to unlock exciting rewards. 
 			   Use the button at the bottom of the page to scan any QR code and get started!</p>
         </div>
-		
+		<!-- Container for active quests -->
         <div class="quest-container" id="active-quests"></div>
+		<!-- Container for completed quests -->
         <div class="quest-container" id="completed-quests"></div>
-
+		
+		<!-- Button to start scanning QR codes -->		<!-- Button to start scanning QR codes -->
         <div class="actions">
             <button onclick="startQRScanner()">Scan & Earn Rewards</button>
         </div>
-
+		 <!-- QR scanner popup -->
         <div id="qr-scanner">
             <div class="scanner-header">
                 <button class="close-scanner" onclick="closeQRScanner()">×</button>
             </div>
             <div id="qr-reader"></div>
         </div>
-
+		<!-- Message shown upon challenge completion -->
         <div id="completed-message" class="completed-message"></div>
-
+		<!-- Content shown after earning a reward -->
         <div id="custom-modal">
             <p id="modal-message"></p>
             <button onclick="closeModal()">OK</button>
@@ -258,8 +259,6 @@
 
         <div id="backdrop"></div>
     </div>
-
-
 
 <script>
     const quests = [
@@ -300,13 +299,13 @@
             isCompleted: false,
         },
     ];
-
     let html5QrCode;
-
+	
+	// Save progress to browser storage
     function saveQuestsToCache() {
         localStorage.setItem("quests", JSON.stringify(quests));
     }
-
+	// Load saved progress if available
     function loadQuestsFromCache() {
         const cached = localStorage.getItem("quests");
         if (cached) {
@@ -317,7 +316,7 @@
             });
         }
     }
-
+	// Check if a quest is fully completed and handle reward
     function checkQuestCompletion(quest) {
         if (
             (quest.id === 1 && quest.completedLocations.length === quest.locations.length) ||
@@ -338,7 +337,7 @@
             displayQuests();
         }
     }
-
+	// Show a green banner when a quest is completed
     function addPermanentText(questName) {
         const completedQuestsContainer = document.getElementById("completed-quests");
         if ([...completedQuestsContainer.children].some(el => el.textContent.includes(questName))) {
@@ -349,7 +348,7 @@
         permanentText.textContent = `Challenge Completed: ${questName}`;
         completedQuestsContainer.appendChild(permanentText);
     }
-
+	// Show the reward popup
     function awardReward(reward) {
         const modal = document.getElementById("custom-modal");
         const backdrop = document.getElementById("backdrop");
@@ -358,14 +357,14 @@
         modal.style.display = "block";
         backdrop.style.display = "block";
     }
-
+	// Close the reward modal
     function closeModal() {
         const modal = document.getElementById("custom-modal");
         const backdrop = document.getElementById("backdrop");
         modal.style.display = "none";
         backdrop.style.display = "none";
     }
-
+	// Launch confetti celebration
     function triggerFireworks() {
         confetti({
 			spread: 180,
@@ -375,8 +374,9 @@
             origin: { y: 0.6 },
         });
     }
-
+	// Handle scanning results from QR codes and match them to quest conditions
     function processQRCode(qrContent) {
+		// Quest 1
         const scavengerHuntQuest = quests.find(q => q.id === 1);
         if (scavengerHuntQuest && !scavengerHuntQuest.isCompleted && scavengerHuntQuest.locations.includes(qrContent)) {
             if (!scavengerHuntQuest.completedLocations.includes(qrContent)) {
@@ -387,21 +387,21 @@
                 alert(`You've already scanned the QR code for ${qrContent}.`);
             }
         }
-
+		// Quest 2
         const memberQuest = quests.find(q => q.id === 2);
         if (memberQuest && !memberQuest.isCompleted && qrContent.toLowerCase() === "member") {
             memberQuest.completedLocations.push("Member QR");
             checkQuestCompletion(memberQuest);
             return;
         }
-
+		// Quest 3
         const firstLectureQuest = quests.find(q => q.id === 3);
         if (firstLectureQuest && !firstLectureQuest.isCompleted && qrContent === "MC001") {
             firstLectureQuest.completedLocations.push("MC001");
             checkQuestCompletion(firstLectureQuest);
             return;
         }
-
+		// Quest 4
         const teacherTalkQuest = quests.find(q => q.id === 4);
         if (teacherTalkQuest && !teacherTalkQuest.isCompleted && qrContent === "MA212") {
             teacherTalkQuest.completedLocations.push("MA212");
@@ -412,11 +412,10 @@
         saveQuestsToCache();
         displayQuests();
     }
-
+	// Display all incomplete quests and their progress
     function displayQuests() {
         const activeQuestsContainer = document.getElementById("active-quests");
         activeQuestsContainer.innerHTML = "";
-
         quests.forEach(quest => {
             if (!quest.isCompleted) {
                 const questElement = document.createElement("div");
@@ -435,11 +434,10 @@
             }
         });
     }
-
+	// Start the QR scanner using the camera
     function startQRScanner() {
         const qrScannerDiv = document.getElementById("qr-scanner");
         qrScannerDiv.style.display = "block";
-
         html5QrCode = new Html5Qrcode("qr-reader");
         const qrCodeSuccessCallback = (decodedText, decodedResult) => {
             html5QrCode.stop().then(() => {
@@ -449,7 +447,6 @@
                 console.error("Failed to stop the QR scanner:", err);
             });
         };
-
         const config = { fps: 10, qrbox: 250 };
         html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
             .catch(err => {
@@ -458,7 +455,7 @@
                 qrScannerDiv.style.display = "none";
             });
     }
-
+	// Stop and close the scanner popup
     function closeQRScanner() {
         const qrScannerDiv = document.getElementById("qr-scanner");
         if (html5QrCode) {
@@ -471,8 +468,8 @@
             qrScannerDiv.style.display = "none";
         }
     }
-
-    // Load progress from cache and display quests on page load
+	
+    // Load previously saved data and show quests when the page is opened
     loadQuestsFromCache();
     displayQuests();
 </script>
