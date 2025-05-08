@@ -3,120 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Building Information</title>
+    <title>Explore University</title>
+
+
     <style>
+        /* General body layout and background */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f4f4f9;
-            background-image: url('uniPic.jpg'); /* Add your background image path here */
+            background-color: #f0f2f5;
+            background-image: url('uniPic.jpg'); /* Background image */
             background-size: cover;
             background-position: center;
         }
 
+        /* Outer container  */
         .main-container {
-            width: 90%;
-            max-width: 800px;
-            background-color: #FFFDF5;
+            width: 98%;
+            background-color: rgba(255, 253, 245, 0.95);
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            padding: 8px;
             box-sizing: border-box;
         }
 
-        .container-text {
-            text-align: left; /* Align text to the left */
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .container-text ul {
-            list-style-type: disc;
-            padding-left: 20px; 
-            font-size: 18px;
-        }
-
-        .container-text {
-            text-align: left; 
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 18px;
-			font-family: Arial, Helvetica, sans-serif;
-            font-weight: normal;
-        }
-
-        .container-text li {
-            margin: 10px 0; 
-            padding-left: 5px;
-            font-weight: normal;
-            font-size: 18px;
-            position: relative;
-            opacity: 0;
-            transform: translateX(-20px);
-            animation: fadeInLeft 0.5s ease-in-out forwards;
-        }
-
-        .container-text li:nth-child(1) { animation-delay: 0.1s; }
-        .container-text li:nth-child(2) { animation-delay: 0.3s; }
-        .container-text li:nth-child(3) { animation-delay: 0.6s; }
-        .container-text li:nth-child(4) { animation-delay: 0.8s; }
-
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
+        /* Section for map and buttons */
         .map-section {
             position: relative;
             width: 100%;
             text-align: center;
         }
 
-        #rotatingImage {
-            width: 100%;
-            height: auto;
-            min-width: 300px;
-            min-height: 400px;
+        /* Campus image inside container */
+        #mapimage {
+            width: 1200px;
             max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
             border-radius: 10px;
             object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+		
+		/* Page title */
+        .title {
+            color: #003366;
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 700;
+            text-align: left;
+            margin-bottom: 1px;
         }
 
+        /* Line divider under title */
+        .divider {
+            width: 100%;
+            height: 3px;
+            margin: 5px 0 10px 0;
+            border: none;
+            background: linear-gradient(to right, #555 0%, #999 30%, transparent 100%);
+        }
+
+        /* Button style used for map labels */
         .btn {
             position: absolute;
-            padding: 1vw 1vw;
+            padding: 1vw 1.2vw;
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 1vw;
+            border-radius: 6px;
             cursor: pointer;
             transform: translate(-50%, -50%);
-            min-width: 10px;
             min-height: 10px;
-            max-width: 200px;
+            max-width: 220px;
             max-height: 80px;
             white-space: nowrap;
-            text-align: left; 
-            padding-left: 10px;
+            text-align: left;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+            transition: transform 0.4s ease, background 0.4s ease;
         }
 
+        /* Hover effect for map buttons */
         .btn:hover {
-            background-color: #0056b3;
+            background: linear-gradient(135deg, #0056b3, #1f75cc);
+            transform: translate(-50%, -50%) scale(1.50); /* Big on hover */
         }
 
+        /* Popup for building information */
         .modal {
             display: none;
             position: fixed;
@@ -124,21 +103,23 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 300px;
-            padding: 20px;
+            padding: 25px;
             background-color: #FFFDF5;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 1000;
             border-radius: 10px;
         }
 
+        /* Content inside popup */
         .modal-content {
-            text-align: left; 
+            text-align: left;
         }
 
+        /* 'X' close button for popup */
         .close {
             position: absolute;
             top: 10px;
-            right: 10px;
+            right: 15px;
             cursor: pointer;
             font-size: 20px;
             color: #888;
@@ -148,6 +129,49 @@
             color: #000;
         }
 
+        /* Scrolling image inside popup */
+        .scrolling-images {
+            display: flex;
+            overflow-x: hidden;
+            margin-top: 10px;
+            position: relative;
+            gap: 10px;
+            width: 100%;
+        }
+
+        /* Image style inside the scrolling container */
+        .scrolling-images img {
+            width: 280px;
+            height: 200px;
+            margin-right: 10px;
+            border-radius: 5px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        /* Button to take challenges  */
+        .challenges-btn {
+            display: block;
+            margin: 25px auto;
+            padding: 15px 30px;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 2s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+        }
+
+        .challenges-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.06);
+        }
+
+        /* Dark overlay shown behind modal */
         .overlay {
             display: none;
             position: fixed;
@@ -158,139 +182,118 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
-
-        .scrolling-images {
-            display: flex;
-            overflow-x: hidden;
-            margin-top: 10px;
-            position: relative;
-            width: 100%;
-        }
-
-        .scrolling-images img {
-            width: 300px;
-            height: 300px;
-            margin-right: 10px;
-            border-radius: 5px;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        .scrolling-images::-webkit-scrollbar {
-            display: none;
-        }
-
-        .scrolling-images {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .challenges-btn {
-            display: block;
-            margin: 20px auto;
-            padding: 15px 30px;
-			width: 100%;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .challenges-btn:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
+
+
 <body>
     <div class="main-container">
-        <!-- Text inside container -->
-        <div class="container-text" id="text-content">
-            <p>We offer a wide range of undergraduate courses designed to inspire learning, and have a vibrant history of academic excellence. Undergraduate students will develop academically as they prepare for a future career or further study in their desired field. Over the course of their degree, they’ll take advantage of unique opportunities, grow personally, and gain invaluable knowledge and skills to help them flourish in life.</p>
-            <ul>
-                <li><strong>Employability</strong> – 89% of our UK graduates are employed, in education, or running their own business according to the latest Graduate Outcomes results.</li>
-                <li><strong>Opportunity</strong> – We want you to have every opportunity to prepare for your future, so over the last 5 years we have spent millions upgrading the buildings and equipment across our campuses, giving you facilities to support your studies, and prepare you for your career.</li>
-                <li><strong>Community</strong> – You’ll be welcomed into a diverse, rich and vibrant community of students, ready to embark on undergraduate study alongside you.</li>
-                <li><strong>Support</strong> – You will be supported by teams to suit your individual needs. Our flexible approach encourages personalised learning that works for you.</li>
-            </ul>
-            <p>Click buttons on the map to get more knowledge about the University.</p>
-            <button id="challenges-btn" class="challenges-btn">Challenges</button>
+        <!-- Page Title -->
+        <div class="header">
+            <h1 class="title">Let's Explore the University</h1>
+            <hr class="divider">
         </div>
 
-        <!-- Map Section -->
+        <!-- Text inside container -->
+        <div class="container-text" id="text-content">
+            <p>Explore the campus. Select a building name on the map to get more information.</p>
+        </div>
+
+        <!--  CAMPUS MAP SECTION  -->
         <div class="map-section">
-            <img id="rotatingImage" src="University.png" alt="Static Map">
-            <button class="btn" id="btn1" style="top: 34%; left: 20%;">MD Building</button>
-            <button class="btn" id="btn2" style="top: 10%; left: 50%;">MC Building</button>
-            <button class="btn" id="btn3" style="top: 70%; left: 38%;">MA Building</button>
-            <button class="btn" id="btn4" style="top: 36%; left: 70%;">MI Building</button>
+            <img id="mapimage" src="University.png" alt="Static Map">
+
+            <!-- Interactive buttons placed over the image -->
+            <button class="btn" id="btn1" style="top: 30%; left: 30%;">MD Building </button>
+            <button class="btn" id="btn2" style="top: 10%; left: 50%;">MC Building </button>
+            <button class="btn" id="btn3" style="top: 60%; left: 38%;">MA Building</button>
+            <button class="btn" id="btn4" style="top: 33%; left: 70%;">MI Building</button>
+
+            <!-- Challenges button below image -->
+            <button id="challenges-btn" class="challenges-btn">Take The Challenges</button>
+        </div>
+
+        <!-- Google Dialogflow Chatbot -->
+        <div class="chatbot-wrapper">
+            <df-messenger
+                chat-title="PathFinder"
+                agent-id="ff5fd13d-16da-486c-b432-2542cdca2286"
+                language-code="en">
+            </df-messenger>
         </div>
     </div>
 
+    <!--  MODAL FOR BUILDING DETAILS  -->
     <div id="modal" class="modal">
         <span class="close" id="close-modal">&times;</span>
         <div class="modal-content">
             <h2 id="modal-title">Information</h2>
             <p id="modal-text">This is the default information.</p>
-            <div class="scrolling-images" id="scrolling-images">
-            </div>
+            <div class="scrolling-images" id="scrolling-images"></div>
         </div>
     </div>
 
+    <!-- Overlay shown behind modal -->
     <div id="overlay" class="overlay"></div>
-
+	
+	
     <script>
+        // Modal and overlay elements
         const modal = document.getElementById('modal');
         const overlay = document.getElementById('overlay');
         const closeModalBtn = document.getElementById('close-modal');
 
+        // Function to open modal with content and optional images
         function openModal(title, text, images = []) {
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-text').innerHTML = text;
             const scrollingImagesContainer = document.getElementById('scrolling-images');
             scrollingImagesContainer.innerHTML = ''; // Clear previous images
 
+            // Add images to scrolling container
             images.forEach(image => {
                 const imgElement = document.createElement('img');
                 imgElement.src = image;
                 scrollingImagesContainer.appendChild(imgElement);
             });
 
+            // Show modal and overlay
             modal.style.display = 'block';
             overlay.style.display = 'block';
 
-            autoScrollImages(scrollingImagesContainer);
+            // Start image scrolling animation
+            ImageScroll(scrollingImagesContainer);
         }
 
-        function closeModal() {
+        // Function to close modal
+        function closeInfo() {
             modal.style.display = 'none';
             overlay.style.display = 'none';
         }
 
-        function autoScrollImages(container) {
+        // Function to create continuous horizontal scroll
+        function ImageScroll(container) {
             const scrollSpeed = 1; 
             let scrollPosition = 0;
 
             function scroll() {
                 scrollPosition += scrollSpeed;
                 if (scrollPosition >= container.scrollWidth - container.clientWidth) {
-                    scrollPosition = 0; 
+                    scrollPosition = 0; // Reset when end is reached
                 }
                 container.scrollLeft = scrollPosition;
-                requestAnimationFrame(scroll);
+                requestAnimationFrame(scroll); // Call recursively
             }
 
             scroll(); 
         }
 
-        closeModalBtn.addEventListener('click', closeModal);
-        overlay.addEventListener('click', closeModal);
+        // Event listeners to close popup
+        closeModalBtn.addEventListener('click', closeInfo);
+        overlay.addEventListener('click', closeInfo);
 
-        //Event listeners to buttons
-        document.getElementById('btn1').addEventListener('click', function() {
+        // Map button click handlers	
+		document.getElementById('btn1').addEventListener('click', function() {
             openModal(
                 'Ambika Paul Building',
                 `The current student gateway, MD Building is home to the main library, Students' Union, sports centre and help and advice points.<br><br>
@@ -355,9 +358,12 @@
             );
         });
 
+        // Redirect to challenges page
         document.getElementById('challenges-btn').addEventListener('click', function() {
-            window.location.href = 'challenges.html'; 
+            window.location.href = 'challenges.html';
         });
     </script>
+    <!-- Dialogflow Messenger SDK -->
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
 </body>
 </html>
