@@ -90,6 +90,39 @@
 
 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const courseDropdown = document.getElementById('courseDropdown');
+            const scheduleContainer = document.querySelector('.container:last-child'); // Assuming the schedule is in the last container
+
+            courseDropdown.addEventListener('change', function() {
+                const selectedSubject = this.value;
+
+                if (selectedSubject === 'Schedule' || selectedSubject === '') {
+                    // Optionally clear the schedule or display a default message
+                    scheduleContainer.innerHTML = '';
+                    return;
+                }
+
+                // Make an AJAX request to the server
+                fetch('fetch_schedule.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'subject=' + encodeURIComponent(selectedSubject)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    scheduleContainer.innerHTML = data; // Update the schedule container with the received data
+                })
+                .catch(error => {
+                    console.error('Error fetching schedule:', error);
+                    scheduleContainer.innerHTML = '<p>Error loading schedule.</p>';
+                });
+            });
+        });
+    </script>
 
 
 
