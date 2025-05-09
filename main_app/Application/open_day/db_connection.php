@@ -3,7 +3,7 @@
     function db_connections($password){
         //connect to database
 
-        $conn = new mysqli("localhost", "2362827", 
+        $conn = new mysqli("127.0.0.1", "2362827", 
                 $password, "db2362827");
 
         if ($conn->connect_error) {

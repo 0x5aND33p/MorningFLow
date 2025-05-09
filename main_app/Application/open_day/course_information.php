@@ -9,114 +9,290 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        /* Custom Styles */
-        .header {
-            background: linear-gradient(90deg, #007BFF, #0056b3);
-            color: white;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-align: center;
-        }
+    :root {
+      --bg-light: #f4f4f4;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #eee;
+      --card-light: white;
+      --card-dark: #2e2e2e;
+    }
 
-        .course-card {
-            color: white;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-light);
+      color: var(--text-light);
+      text-align: center;
+      transition: background 0.4s, color 0.4s;
+    }
 
-        .course-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
 
-        .STEM { background: linear-gradient(135deg, #007BFF, #0047A3); }
-        .Business { background: linear-gradient(135deg, #28a745, #1E7D31); }
-        .Humanities { background: linear-gradient(135deg, #9b59b6, #6A2E91); }
-    </style>
+    #splash {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #0056b3; display: flex; justify-content: center;
+      align-items: center; flex-direction: column; color: white;
+      z-index: 2000; opacity: 1; transition: opacity 0.8s ease;
+    }
+
+    .header {
+      background: linear-gradient(90deg, #007BFF, #0056b3);
+      color: white;
+      padding: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .toggle-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 1100px; margin: 20px auto;
+      background: var(--card-light);
+      padding: 20px; border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.4s;
+    }
+
+    body.dark .container {
+      background: var(--card-dark);
+    }
+
+    .search-bar {
+      width: 100%; padding: 10px; font-size: 16px;
+      border: 2px solid #007BFF; border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 10px 15px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .tab.active {
+      background: #0047A3;
+    }
+
+    .course-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
+    }
+
+    .course-card {
+      border-radius: 10px; padding: 15px; color: white;
+      text-align: left; transition: transform .3s, box-shadow .3s;
+      position: relative; opacity: 0; animation: fadeInUp .5s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .course-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .STEM       { background: linear-gradient(135deg,#007BFF,#0047A3); }
+    .Business   { background: linear-gradient(135deg,#28a745,#1E7D31); }
+    .Humanities { background: linear-gradient(135deg,#9b59b6,#6A2E91); }
+
+    .course-card button {
+      border: none; padding: 8px 12px; font-size: 14px;
+      border-radius: 5px; cursor: pointer;
+      background: rgba(255,255,255,0.3); color: white;
+      margin-top: 10px;
+    }
+
+    .modal {
+      display: flex; justify-content: center; align-items: flex-end;
+      position: fixed; z-index: 1000; left: 0; top: 0; width: 100%;
+      height: 100%; background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px); opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal.show { opacity: 1; visibility: visible; }
+
+    .modal-content {
+      background: white; padding: 25px; border-radius: 25px 25px 0 0;
+      width: 100%; max-width: 450px; text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transform: translateY(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .modal.show .modal-content { transform: translateY(0); }
+
+    .modal-content h2 { font-size: 24px; margin-bottom: 10px; }
+    .modal-content p  { font-size: 16px; margin-bottom: 15px; }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .course-list { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
     <?php include("navbar.html"); ?>
-
-    <div class="header">Course Information</div>
-
-    <div class="container mt-4">
-        <div class="row g-3 align-items-center">
-            <div class="col-md-6">
-                <input type="text" class="form-control" id="searchBar" placeholder="Search for a course..." onkeyup="filterCourses()">
-            </div>
-            <div class="col-md-6">
-                <select class="form-select" id="filterCategory" onchange="filterCourses()">
-                    <option value="all">All Categories</option>
-                    <option value="STEM">STEM</option>
-                    <option value="Business">Business</option>
-                    <option value="Humanities">Humanities</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row mt-4" id="courseList"></div>
+    <div id="splash">
+        <h1>University of Wolverhampton</h1>
+        <p>Discover your future in our innovative courses</p>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="modalCategory"></p>
-                    <p id="modalDescription"></p>
-                </div>
-            </div>
+    <div class="header">
+        <div>Course Information</div>
+        <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </div>
+
+    <div class="container">
+        <input type="text" class="search-bar" id="searchBar" placeholder="Search for a course…" onkeyup="filterCourses()">
+        <div class="tabs">
+        <button class="tab active" data-cat="all" onclick="setCategory('all', this)">All</button>
+        <button class="tab" data-cat="STEM" onclick="setCategory('STEM', this)">STEM</button>
+        <button class="tab" data-cat="Business" onclick="setCategory('Business', this)">Business</button>
+        <button class="tab" data-cat="Humanities" onclick="setCategory('Humanities', this)">Humanities</button>
+        </div>
+        <div class="course-list" id="courseList"></div>
+    </div>
+
+    <div class="modal" id="modal" onclick="closeModalOutside(event)">
+        <div class="modal-content" id="modalContent" onclick="event.stopPropagation()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <p id="modalCategory"></p>
+        <p id="modalDescription"></p>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            
     <script>
+        setTimeout(() => {
+        document.getElementById("splash").style.opacity = "0";
+        }, 2000);
+        setTimeout(() => {
+        document.getElementById("splash").style.display = "none";
+        }, 2800);
+
         const courses = [
-            { title: "BSc Computer Science", category: "STEM", description: "Learn programming, AI, and cybersecurity." },
-            { title: "BEng Mechanical Engineering", category: "STEM", description: "Explore mechanics, materials, and robotics." },
-            { title: "BSc Biomedical Science", category: "STEM", description: "Investigate human biology and medical research." },
-            { title: "BSc Business Management", category: "Business", description: "Develop leadership and strategic skills." },
-            { title: "BA English Literature", category: "Humanities", description: "Analyze literature, poetry, and modern writing." }
+        { title:"BSc (Hons) Computer Science", category:"STEM", description:"Specialize in AI, cybersecurity, or web development with industry placements." },
+        { title:"BSc (Hons) Computer Science with Foundation Year", category:"STEM", description:"Begin with a tailored foundation year before advancing into computing." },
+        { title:"BSc (Hons) Computer Science with Sandwich Placement", category:"STEM", description:"Includes a placement year for practical experience and industry links." },
+        { title:"BSc (Hons) Cybersecurity", category:"STEM", description:"Cover ethical hacking, digital forensics, and cyber intelligence." },
+        { title:"BSc (Hons) Cybersecurity with Sandwich Placement", category:"STEM", description:"A four-year degree including a year-long cyber security placement." },
+        { title:"BSc Business Management", category:"Business", description:"Gain management, marketing, and finance skills for business leadership." },
+        { title:"BSc Marketing", category:"Business", description:"Explore consumer behaviour, branding, and digital campaigns." },
+        { title:"BSc Biomedical Science", category:"STEM", description:"Investigate disease, pathology, and human biology in the lab." },
+        { title:"BA English Literature", category:"Humanities", description:"Explore classic and modern texts, poetry, and drama." },
+        { title:"BA History", category:"Humanities", description:"Discover the history of civilizations, politics, and culture." },
+        { title:"BSc Psychology", category:"Humanities", description:"Study behaviour, emotion, cognition and psychological research." },
+        { title:"BSc (Hons) Pharmaceutical Science", category:"STEM", description:"Focus on drug discovery, analysis, and development." },
+        { title:"BSc (Hons) Pharmaceutical Science with Foundation Year", category:"STEM", description:"Prepares students for pharmaceutical studies with a science foundation." },
+        { title:"BSc (Hons) Pharmacology", category:"Humanities", description:"Explore drug action and development for human treatment." },
+        { title:"BSc (Hons) Pharmacology with Sandwich Placement", category:"Humanities", description:"Practical placement year within pharmacology or clinical science." },
+        { title:"MPharm (Hons) Pharmacy", category:"Humanities", description:"Accredited pharmacy degree with clinical and community applications." },
+        { title:"BSc (Hons) Architectural Design Technology", category:"Humanities", description:"CIAT-accredited with modules on design, materials, and CAD." },
+        { title:"BSc (Hons) Architectural Design Technology with Foundation Year", category:"Humanities", description:"Introductory year followed by three years of architectural training." },
+        { title:"BSc (Hons) Architectural Design Technology with Sandwich Placement", category:"Humanities", description:"Industrial year included to develop practical architectural design skills." },
+        { title:"BSc (Hons) Architecture", category:"Humanities", description:"RIBA-accredited design-focused architecture programme." },
+        { title:"HNC Architectural Studies", category:"Humanities", description:"Two-year higher certificate in architecture fundamentals." }
         ];
 
+        let visibleCourses = [...courses];
+        let activeCategory = "all";
+
         function displayCourses(filteredCourses = courses) {
-            document.getElementById('courseList').innerHTML = filteredCourses.map((course, index) => `
-                <div class="col-md-4">
-                    <div class="card course-card ${course.category} p-3" onclick="openModal(${index})">
-                        <h5>${course.title}</h5>
-                        <button class="btn btn-light btn-sm mt-2">More Info</button>
-                    </div>
-                </div>
-            `).join('');
+        visibleCourses = filteredCourses;
+        const list = document.getElementById('courseList');
+        list.innerHTML = filteredCourses.map((c, i) => `
+            <div class="course-card ${c.category}">
+            <h3>${c.title}</h3>
+            <button onclick="openModal(${i})">More Info</button>
+            </div>`).join('');
         }
 
         function filterCourses() {
-            const searchValue = document.getElementById("searchBar").value.toLowerCase();
-            const selectedCategory = document.getElementById("filterCategory").value;
-            const filteredCourses = courses.filter(course =>
-                (selectedCategory === "all" || course.category === selectedCategory) &&
-                course.title.toLowerCase().includes(searchValue)
-            );
-            displayCourses(filteredCourses);
+        const searchValue = document.getElementById("searchBar").value.toLowerCase();
+        const filtered = courses.filter(c =>
+            (activeCategory === "all" || c.category === activeCategory) &&
+            c.title.toLowerCase().includes(searchValue)
+        );
+        displayCourses(filtered);
         }
 
-        function openModal(index) {
-            const course = courses[index];
-            document.getElementById("modalTitle").innerText = course.title;
-            document.getElementById("modalCategory").innerText = "Category: " + course.category;
-            document.getElementById("modalDescription").innerText = course.description;
-            new bootstrap.Modal(document.getElementById("modal")).show();
+        function setCategory(cat, btn) {
+        activeCategory = cat;
+        document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterCourses();
+        }
+
+        function openModal(i) {
+        const c = visibleCourses[i];
+        document.getElementById("modalTitle").innerText = c.title;
+        document.getElementById("modalCategory").innerText = "Category: " + c.category;
+        document.getElementById("modalDescription").innerText = c.description;
+        document.getElementById("modal").classList.add("show");
+        }
+
+        function closeModal() {
+        document.getElementById("modal").classList.remove("show");
+        }
+
+        function closeModalOutside(e) {
+        if (e.target === document.getElementById("modal")) closeModal();
+        }
+
+        function toggleDarkMode() {
+        document.body.classList.toggle("dark");
         }
 
         displayCourses();
     </script>
 </body>
 </html>
+    
+    

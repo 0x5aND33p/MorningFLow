@@ -46,26 +46,26 @@
 
     <!-- DropDown -->
     <div class="container mt-3">
-      <div class="row">
-          <div class="col-md-12">
-              <select class="form-select" id="courseDropdown">
-                  <option selected disabled>Schedule</option>
-                  <option value="computer-science">My Schedule</option>
-                  <option value="computer-science">BSc Computer Science</option>
-                  <option value="mechanical-engineering">BEng Mechanical Engineering</option>
-                  <option value="biomedical-science">BSc Biomedical Science</option>
-                  <option value="business-management">BSc Business Management</option>
-                  <option value="english-literature">BA English Literature</option>
-              </select>
-          </div>
-      </div>
+        <div class="row">
+            <div class="col-md-12">
+                <select class="form-select" id="courseDropdown">
+                    <option selected disabled>Schedule</option>
+                    <option value="my-schedule">My Schedule</option>
+                    <option value="bsc-computer-science">BSc Computer Science</option>
+                    <option value="beng-mechanical-engineering">BEng Mechanical Engineering</option>
+                    <option value="bsc-biomedical-science">BSc Biomedical Science</option>
+                    <option value="bsc-business-management">BSc Business Management</option>
+                    <option value="ba-english-literature">BA English Literature</option>
+                </select>
+            </div>
+        </div>
     </div>
 
 
 
 
     <!-- Schedule -->
-    <div class="container">
+    <div class="container" id="schedule-output">
     <div class="row p-3">
         <div class="col-md-4">
             <div class="card text-bg-info mb-3">
@@ -92,36 +92,35 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const courseDropdown = document.getElementById('courseDropdown');
-            const scheduleContainer = document.querySelector('.container:last-child'); // Assuming the schedule is in the last container
+        const courseDropdown = document.getElementById('courseDropdown');
+        const scheduleContainer = document.getElementById('schedule-output'); // Use the ID
 
-            courseDropdown.addEventListener('change', function() {
-                const selectedSubject = this.value;
+        courseDropdown.addEventListener('change', function() {
+            const selectedSubject = this.value;
 
-                if (selectedSubject === 'Schedule' || selectedSubject === '') {
-                    // Optionally clear the schedule or display a default message
-                    scheduleContainer.innerHTML = '';
-                    return;
-                }
+            if (selectedSubject === 'Schedule' || selectedSubject === '') {
+                scheduleContainer.innerHTML = '';
+                return;
+            }
 
-                // Make an AJAX request to the server
-                fetch('fetch_schedule.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'subject=' + encodeURIComponent(selectedSubject)
-                })
-                .then(response => response.text())
-                .then(data => {
-                    scheduleContainer.innerHTML = data; // Update the schedule container with the received data
-                })
-                .catch(error => {
-                    console.error('Error fetching schedule:', error);
-                    scheduleContainer.innerHTML = '<p>Error loading schedule.</p>';
+            fetch('fetch_schedule.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'subject=' + encodeURIComponent(selectedSubject)
+            })
+            .then(response => response.text())
+            .then(data => {
+                scheduleContainer.innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error fetching schedule:', error);
+                scheduleContainer.innerHTML = '<p>Error loading schedule.</p>';
                 });
             });
         });
+
     </script>
 
 
