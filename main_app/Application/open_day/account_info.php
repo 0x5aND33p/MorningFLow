@@ -43,8 +43,17 @@ $email = htmlspecialchars($_SESSION['email']);
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: none;
-            z-index: 999;
+            width: 250px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            visibility: hidden;
+        }
+
+        .account-info.show {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
         }
     </style>
 </head>
@@ -71,7 +80,7 @@ $email = htmlspecialchars($_SESSION['email']);
 <!-- Floating Button -->
 <button class="floating-btn" onclick="toggleAccountInfo()">👤</button>
 
-<!-- Hidden Account Info -->
+<!-- Animated Account Info -->
 <div class="account-info" id="accountInfo">
     <h5>Account Info</h5>
     <p><strong>Username:</strong> <?php echo $username; ?></p>
@@ -79,11 +88,23 @@ $email = htmlspecialchars($_SESSION['email']);
 </div>
 
 <script>
+    const accountInfo = document.getElementById("accountInfo");
+    const toggleButton = document.querySelector(".floating-btn");
+
     function toggleAccountInfo() {
-        const info = document.getElementById("accountInfo");
-        info.style.display = info.style.display === "none" || info.style.display === "" ? "block" : "none";
+        accountInfo.classList.toggle("show");
     }
+
+    // Close account info if clicked outside
+    document.addEventListener("click", function(event) {
+        const isClickInside = accountInfo.contains(event.target) || toggleButton.contains(event.target);
+
+        if (!isClickInside && accountInfo.classList.contains("show")) {
+            accountInfo.classList.remove("show");
+        }
+    });
 </script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
