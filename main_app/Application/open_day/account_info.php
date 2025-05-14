@@ -71,7 +71,6 @@ $email = htmlspecialchars($_SESSION['email']);
       <div class="navbar-nav ms-auto">
         <a class="nav-link active" href="#">Home</a>
         <a class="nav-link disabled" href="#" tabindex="-1"><?php echo $email; ?></a>
-        <a class="nav-link" href="logout.php">Logout</a>
       </div>
     </div>
   </div>
