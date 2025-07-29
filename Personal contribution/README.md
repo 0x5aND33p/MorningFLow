@@ -40,4 +40,5 @@ Explore the interactive campus map and challenges in action:
 
 👉 [Try it Live](https://0x5and33p.github.io/MorningFLow/Personal%20contribution/map.html)
 
-> 🧭 **Note:** Use the QR codes in (./QR Codes) folder to play the challenges.
+🧭 **Note:** To test the challenges, use the QR code images located in the [`qrcode`](./QRCode) folder.  
+Each image represents a different task — scan them in the app to simulate completing challenges.
