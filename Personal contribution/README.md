@@ -22,8 +22,20 @@ In this project, I served primarily as a Software Developer and secondarily as a
 | UX Enhancements   | Confetti, Hover Effects, Animations  |
 | Storage           | Local Storage Caching (Challenges)   |
 
-<p align="center">
+
+## 📸 Demo
+See the app in action with real screenshots and demos below.
+
+<p align="left">
   <img src="Demo/1.jpg" alt="Campus Map" width="300"/>
 </p>
 <p align="center"><em>Fig 1: Interactive map showing clickable buildings</em></p>
 
+<p align="center">
+  <img src="Demo/2.jpg" alt="Campus Map" width="300"/>
+</p>
+<p align="center"><em>Fig 2: Pop up when button clicked to show building information</em></p>
+
+
+## 🔗 Live Demo
+👉 [Try it Live]([https://your-demo-site.com](https://0x5and33p.github.io/MorningFLow/Personal%20contribution/map.html))
