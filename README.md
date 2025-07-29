@@ -1,17 +1,18 @@
 # MorningFLow
 
 ## Project outcome
-A team composed of individuals from diverse backgrounds, is working together to create an engaging open-day app. The app is designed to help new students explore and learn more about the university, showcasing its unique offerings. The ultimate goal is to highlight why the university is an excellent choice and encourage students to join.
+A team of 7 individuals from diverse backgrounds, called MorningFLow, worked together to create an engaging open-day app. The app is designed to help new students explore and learn more about the university, showcasing its unique offerings. The ultimate goal is to highlight why the university is an excellent choice and encourage students to join.
+
 
 ## Project Content
 - Software Development Methodologies
-- Business Analysis & Justification
 - IT Security
 - Version Control
 - Collaboration Tools
 - Testing
 - Software Documentation
 - AI Collaboration for Developers
+
 
 ## Technologies used
 ![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
