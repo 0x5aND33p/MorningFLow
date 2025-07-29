@@ -22,5 +22,8 @@ In this project, I served primarily as a Software Developer and secondarily as a
 | UX Enhancements   | Confetti, Hover Effects, Animations  |
 | Storage           | Local Storage Caching (Challenges)   |
 
-![Campus Map](Demo/1.jpg)
+<p align="center">
+  <img src="Demo/1.jpg" alt="Campus Map" width="600"/>
+</p>
+<p align="center"><em>Fig 1: Interactive map showing clickable buildings</em></p>
 
