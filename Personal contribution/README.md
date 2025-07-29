@@ -1,6 +1,6 @@
 # 🌐 Open Day Web-Application
 In this project, I served primarily as a Software Developer and secondarily as a Project Manager. My main goal,as defined in team discussions,was to design and develop a web page that would guide users effectively during the university's Open Day.The platform aimed to both assist navigation and engage visitors through interactive challenges as they explored the campus.
----
+
 
 ## 🚀 Key Features
 - 🏛️ Interactive Clickable Buttons with Pop-Ups Describing University Buildings 
@@ -9,7 +9,7 @@ In this project, I served primarily as a Software Developer and secondarily as a
 - 🎉 Confetti & Reward System  
 - 🤖 Google Dialogflow AI Chatbot  
 - 📱 Mobile-First & Fully Responsive Design  
-- ✨ Smooth Animations & UI Enhancements  
+- ✨ Smooth Animations & UI Enhancements
 
 
 ## 🧠 Tech Stack
