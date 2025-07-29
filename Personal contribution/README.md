@@ -26,15 +26,13 @@ In this project, I served primarily as a Software Developer and secondarily as a
 ## 📸 Demo
 See the app in action with real screenshots and demos below.
 
-<p align="left">
-  <img src="Demo/1.jpg" alt="Campus Map" width="300"/>
-</p>
-<p align="center"><em>Fig 1: Interactive map showing clickable buildings</em></p>
-
 <p align="center">
-  <img src="Demo/2.jpg" alt="Campus Map" width="300"/>
+  <img src="Demo/1.jpg" width="150" title="Map View"/>
+  <img src="Demo/2.jpg" width="150" title="Challenge Screen"/>
+  <img src="Demo/3.jpg" width="150" title="Progress Bar"/>
+  <img src="Demo/4.jpg" width="150" title="QR Scanner"/>
+  <img src="Demo/5.jpg" width="150" title="Reward Page"/>
 </p>
-<p align="center"><em>Fig 2: Pop up when button clicked to show building information</em></p>
 
 
 ## 🔗 Live Demo
