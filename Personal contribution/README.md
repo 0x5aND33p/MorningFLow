@@ -27,11 +27,11 @@ In this project, I served primarily as a Software Developer and secondarily as a
 See the app in action with real screenshots and demos below.
 
 <p align="center">
-  <img src="Demo/1.jpg" width="200" title="Map View"/>
-  <img src="Demo/2.jpg" width="200" title="Building Description"/>
-  <img src="Demo/3.jpg" width="200" title="Chat-Bot"/>
-  <img src="Demo/4.jpg" width="200" title="Challenge Complition"/>
-  <img src="Demo/5.jpg" width="200" title="Progress Tracking"/>
+  <img src="Demo/1.jpg" width="250" title="Map View"/>
+  <img src="Demo/2.jpg" width="250" title="Building Description"/>
+  <img src="Demo/3.jpg" width="250" title="Chat-Bot"/>
+  <img src="Demo/4.jpg" width="250" title="Challenge Complition"/>
+  <img src="Demo/5.jpg" width="250" title="Progress Tracking"/>
 </p>
 
 
