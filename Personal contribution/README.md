@@ -23,7 +23,7 @@ In this project, I served primarily as a Software Developer and secondarily as a
 | Storage           | Local Storage Caching (Challenges)   |
 
 <p align="center">
-  <img src="Demo/1.jpg" alt="Campus Map" width="100"/>
+  <img src="Demo/1.jpg" alt="Campus Map" width="300"/>
 </p>
 <p align="center"><em>Fig 1: Interactive map showing clickable buildings</em></p>
 
