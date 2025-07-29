@@ -27,11 +27,11 @@ In this project, I served primarily as a Software Developer and secondarily as a
 See the app in action with real screenshots and demos below.
 
 <p align="center">
-  <img src="Demo/1.jpg" width="150" title="Map View"/>
-  <img src="Demo/2.jpg" width="150" title="Challenge Screen"/>
-  <img src="Demo/3.jpg" width="150" title="Progress Bar"/>
-  <img src="Demo/4.jpg" width="150" title="QR Scanner"/>
-  <img src="Demo/5.jpg" width="150" title="Reward Page"/>
+  <img src="Demo/1.jpg" width="200" title="Map View"/>
+  <img src="Demo/2.jpg" width="200" title="Challenge Screen"/>
+  <img src="Demo/3.jpg" width="200" title="Progress Bar"/>
+  <img src="Demo/4.jpg" width="200" title="QR Scanner"/>
+  <img src="Demo/5.jpg" width="200" title="Reward Page"/>
 </p>
 
 
